@@ -1,0 +1,9 @@
+services:
+  app:
+    build: app # Dockerfileがあるディレクトリへの相対パス
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/app # [ホストディレクトリ]:[コンテナ内ディレクトリ]
+    working_dir: /app
+    tty: true # コンテナの正常終了を阻止
