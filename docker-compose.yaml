@@ -1,6 +1,6 @@
 services:
   app:
-    build: app # Dockerfileがあるディレクトリへの相対パス
+    build: . # Dockerfileがあるディレクトリへの相対パス
     ports:
       - 3000:3000
     volumes:
