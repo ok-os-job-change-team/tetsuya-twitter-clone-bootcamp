@@ -7,3 +7,28 @@ services:
       - .:/app # [ホストディレクトリ]:[コンテナ内ディレクトリ]
     working_dir: /app
     tty: true # コンテナの正常終了を阻止
+    depends_on:
+      - db # dbコンテナと接続
+
+  db:
+    image: mysql:8.3.0
+    platform: linux/amd64
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASS}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASS}
+      TZ: ${TZ}
+    env_file:
+      - .env
+    ports:
+      - ${DB_PORT}:3306
+    volumes:
+      - data-volume:/var/lib/mysql
+      - ./conf/my.conf:/etc/mysql/conf.d/my.cnf
+      - ./mysql:/sql
+
+
+volumes:
+  data-volume:
