@@ -47,6 +47,10 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+  # RSpecを導入する
+  gem 'rspec-rails'
+  # factory botを導入する
+  gem 'factory_bot_rails'
 end
 
 group :development do
