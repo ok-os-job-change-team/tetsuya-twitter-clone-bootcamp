@@ -13,7 +13,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'emailがnilのとき' do
-      let(:user) {build(:user, email:nil)}
+      let(:user) { build(:user, email: nil) }
 
       it 'errorsに「email列が空であるエラー」が格納される' do
         aggregate_failures do
@@ -25,7 +25,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'passwordがnilのとき' do
-      let(:user) {build(:user, password:nil)}
+      let(:user) { build(:user, password: nil) }
 
       it 'errorsに「password列が空であるエラー」が格納される' do
         aggregate_failures do

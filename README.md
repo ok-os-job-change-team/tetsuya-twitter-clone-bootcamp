@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## `db/schema/user.schema`を反映させるには
 
-Things you may want to cover:
+ridgepole(gem)の導入と`lib/tasks/ridgepole.rake`により、下記コマンドの実行で`db/schema.rb`の更新と DB への反映が同時に行われる
 
-* Ruby version
+```bash
+rake ridgepole:apply
 
-* System dependencies
+# test環境のDBに反映させる場合
+rake ridgepole:apply test
+```
 
-* Configuration
+## `db/seeds.rb`を DB に反映させるには
 
-* Database creation
+```bash
+rake db:seed
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# test環境のDBに反映させる場合
+rake db:seed RAILS_ENV=test
+```
