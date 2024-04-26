@@ -1,6 +1,6 @@
 RSpec.describe User, type: :model do
   describe '#validation' do
-    context 'emailとpasswordがそれぞれ有効な値であるとき' do
+    context '属性が全て有効な値であるとき' do
       let(:user) { build(:user) }
 
       it 'userが有効であり、errorsが空である' do
