@@ -56,6 +56,11 @@ group :development, :test do
   # https://github.com/ridgepole/ridgepole
   gem 'ridgepole'
 
+  # https://github.com/pry/pry-rails
+  gem 'pry-rails'
+
+  # https://github.com/deivid-rodriguez/pry-byebug
+  gem 'pry-byebug'
 end
 
 group :development do
