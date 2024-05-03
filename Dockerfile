@@ -1,6 +1,6 @@
-FROM ruby:3.3
+FROM ruby:3.2.2
 
-# RUN gem install rails
+RUN gem install rails
 
 RUN apt-get update && \
   apt-get install -y nodejs && \
