@@ -1,0 +1,20 @@
+name: Rails Continuous Integration # ワークフローの名前
+
+on:
+  push: # GitHubにpushされた時にワークフローを起動する
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: copy
+        run: cp .env.template .env
+      
+      - name: build docker image # 環境変数を読み込んだdocker imageを構築する。
+        run: docker compose build app
+
+      - name: Run rubocop # Rubocopを実行する
+        run: docker compose run app rubocop
