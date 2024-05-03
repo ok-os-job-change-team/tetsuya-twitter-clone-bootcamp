@@ -9,13 +9,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+      
+      - name: copy
+        run: cp .env.template .env
+      
+      - name: build docker image # 環境変数を読み込んだdocker imageを構築する。
+        run: docker compose build app
 
       - name: Run rubocop # Rubocopを実行する
-        env:
-          ROOT_PASS: root
-          DB_NAME: db
-          DB_USER: user
-          DB_PASS: password
-          DB_PORT: 3306
-          TZ: Asia/Tokyo
         run: docker compose run app rubocop
