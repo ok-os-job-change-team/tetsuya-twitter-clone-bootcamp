@@ -4,3 +4,7 @@ require:
   - rubocop-factory_bot
   - rubocop-rails
   - rubocop-rspec_rails
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*"
