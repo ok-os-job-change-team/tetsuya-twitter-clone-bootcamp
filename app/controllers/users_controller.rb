@@ -7,14 +7,16 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
+  # GET /users/new
   def new
     @user = User.new
   end
 
+  # POST /users
   def create
     @user = User.new(user_params)
     if @user.save
-      redirect_to @user, notice: 'User was successfully created.'
+      redirect_to @user, notice: 'アカウントの作成に成功しました'
     else
       render :new
     end
