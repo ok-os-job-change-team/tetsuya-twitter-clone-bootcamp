@@ -56,4 +56,44 @@ RSpec.describe UsersController, type: :request do
       end
     end
   end
+
+  describe 'GET /users/edit' do
+    let!(:user) { create(:user) }
+
+    it 'アクセスに成功する' do
+      aggregate_failures do
+        get edit_user_path(user.id)
+        expect(response).to have_http_status(:success)
+        expect(response.body).to include 'ユーザー情報編集'
+      end
+    end
+  end
+
+  describe 'PUT /users' do
+    let!(:user) { create(:user) }
+
+    context '有効なパラメータのとき' do
+      it 'ユーザーを更新する' do
+        aggregate_failures do
+          put user_path(user.id), params: { user: { email: 'new_email@example.com' } }
+          user.reload
+          expect(user.email).to eq('new_email@example.com')
+          expect(response).to redirect_to(user)
+        end
+      end
+    end
+
+    let!(:user_email) { user.email }
+
+    context '無効なパラメータのとき' do
+      it 'ユーザーを更新しない' do
+        aggregate_failures do
+          post user_path(user.id), params: { user: { email: nil } }
+          user.reload
+          expect(user.email).not_to be_nil
+          expect(user.email).to eq(user_email)
+        end
+      end
+    end
+  end
 end
