@@ -45,12 +45,14 @@ RSpec.describe UsersController, type: :request do
       end
     end
 
-    it 'emailが不適切なとき、新規ユーザーを作成しない' do
-      aggregate_failures do
-        expect do
-          post users_path, params: { user: attributes_for(:user, email: nil) }
-        end.not_to change(User, :count)
-        expect(response.body).to include '新規登録'
+    context 'emailがnilのとき' do
+      it '新規ユーザーを作成しない' do
+        aggregate_failures do
+          expect do
+            post users_path, params: { user: attributes_for(:user, email: nil) }
+          end.not_to change(User, :count)
+          expect(response.body).to include '新規登録'
+        end
       end
     end
   end
