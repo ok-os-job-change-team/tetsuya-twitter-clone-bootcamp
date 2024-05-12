@@ -7,9 +7,10 @@ services:
       - .:/app # [ホストディレクトリ]:[コンテナ内ディレクトリ]
     working_dir: /app
     tty: true # コンテナの正常終了を阻止
+    stdin_open: true
     depends_on:
       - db # dbコンテナと接続
-    command: rails s -b 0.0.0.0
+    command:  /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
 
   db:
     image: mysql:8.3.0

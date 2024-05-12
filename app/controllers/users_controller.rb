@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
-  # GET /index
+  # GET /users
   def index
     @users = User.all
   end
 
-  # GET /show
+  # GET /users/:id
   def show
     @user = User.find(params[:id])
   end
@@ -20,16 +20,17 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to @user, notice: 'アカウントの作成に成功しました'
     else
-      render :new
+      flash.now[:alert] = 'アカウントの作成に失敗しました'
+      render :new, status: :unprocessable_entity
     end
   end
 
-  # GET /users/edit
+  # GET /users/:id/edit
   def edit
     @user = User.find(params[:id])
   end
 
-  # PUT /users
+  # PUT /users/:id
   def update
     @user = User.find(params[:id])
 
@@ -37,7 +38,7 @@ class UsersController < ApplicationController
       redirect_to @user, notice: 'アカウント情報を更新しました'
     else
       flash.now[:alert] = 'アカウント情報の更新に失敗しました'
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
