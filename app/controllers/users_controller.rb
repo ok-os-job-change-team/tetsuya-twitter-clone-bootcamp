@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users/:id
+  # DELETE /users/:id
   def destroy
     @user = User.find(params[:id])
 

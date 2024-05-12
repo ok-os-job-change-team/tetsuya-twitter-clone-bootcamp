@@ -57,7 +57,7 @@ RSpec.describe UsersController, type: :request do
     end
   end
 
-  describe 'POST /users/:id' do
+  describe 'DELETE /users/:id' do
     context 'ユーザーが存在するとき' do
       let!(:user) { create(:user) }
 
