@@ -1,5 +1,5 @@
 RSpec.describe UsersController, type: :request do
-  describe 'GET /index' do
+  describe 'GET /users' do
     let!(:user) { create(:user) }
 
     it 'アクセスに成功する' do
@@ -11,7 +11,7 @@ RSpec.describe UsersController, type: :request do
     end
   end
 
-  describe 'GET /show' do
+  describe 'GET /users/:id' do
     let!(:user) { create(:user) }
 
     it 'アクセスに成功する' do
@@ -53,6 +53,26 @@ RSpec.describe UsersController, type: :request do
           end.not_to change(User, :count)
           expect(response.body).to include '新規登録'
         end
+      end
+    end
+  end
+
+  describe 'DELETE /users/:id' do
+    context 'ユーザーが存在するとき' do
+      let!(:user) { create(:user) }
+
+      it 'ユーザーを削除する' do
+        expect do
+          delete user_path(user)
+        end.to change(User, :count).by(-1)
+      end
+    end
+
+    context 'ユーザーが存在しないとき' do
+      it 'レコードが削除されない' do
+        expect do
+          delete user_path(0)
+        end.to change(User, :count).by(0)
       end
     end
   end

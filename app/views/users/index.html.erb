@@ -1,11 +1,17 @@
 <h1>Users リスト</h1>
 
-<ul>
+<table>
+  <tr>
+    <th>ID</th>
+    <th>E-mail</th>
+  </tr>
   <% @users.each do |user| %>
-    <li>
-      <%= link_to user.email, user_path(user) %>
-    </li>
+    <tr>
+      <td><%= user.id %></td>
+      <td><%= link_to user.email, user_path(user) %></td>
+      <td><%= button_to '削除', user, method: :delete %></td>
+    </tr>
   <% end %>
-</ul>
+</table>
 
 <%= link_to '新規ユーザー', new_user_path %>
