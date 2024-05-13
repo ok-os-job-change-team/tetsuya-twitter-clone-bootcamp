@@ -42,6 +42,19 @@ class UsersController < ApplicationController
     end
   end
 
+  # DELETE /users/:id
+  def destroy
+    @user = User.find(params[:id])
+
+    if @user.destroy
+      flash[:success] = 'ユーザーは削除されました'
+    else
+      flash.now[:alert] = 'ユーザーの削除に失敗しました'
+    end
+
+    redirect_to users_url
+  end
+
   private
 
   def user_params
