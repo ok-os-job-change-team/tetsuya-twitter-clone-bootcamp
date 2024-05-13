@@ -94,15 +94,13 @@ RSpec.describe UsersController, type: :request do
       end
     end
 
-    let!(:user_email) { user.email }
-
     context '無効なパラメータのとき' do
       it 'ユーザーを更新しない' do
         aggregate_failures do
           put user_path(user.id), params: { user: { email: nil } }
           user.reload
           expect(user.email).not_to be_nil
-          expect(user.email).to eq(user_email)
+          expect(response.body).to include 'アカウント情報の更新に失敗しました'
         end
       end
     end
