@@ -1,0 +1,321 @@
+<mxfile host="app.diagrams.net" modified="2024-05-15T07:26:44.671Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="kJK7993gnUTxBRGO3Q-f" version="24.4.0" type="device">
+  <diagram name="Page-1" id="9f46799a-70d6-7492-0946-bef42562c5a5">
+    <mxGraphModel dx="2534" dy="786" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" background="none" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="bip2HtOZxSu_beoOGapb-57" value="ログイン" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-55" target="bip2HtOZxSu_beoOGapb-56">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-55" value="ログイン画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFCCCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-1040" y="40" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-64" value="ページネーション" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-56" target="bip2HtOZxSu_beoOGapb-62">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-56" target="bip2HtOZxSu_beoOGapb-60">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-600" y="80" />
+              <mxPoint x="-600" y="80" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-90" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-56" target="bip2HtOZxSu_beoOGapb-65">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-580" y="90" />
+              <mxPoint x="-580" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-91" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-56" target="bip2HtOZxSu_beoOGapb-66">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-590" y="100" />
+              <mxPoint x="-590" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-92" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-56" target="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-600" y="110" />
+              <mxPoint x="-600" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-56" value="ホーム画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-800" y="40" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-59" value="自＋フォロー投稿一覧" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-56">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-129" value="いいね登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-56">
+          <mxGeometry x="10" y="55" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-124" value="投稿" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-60" target="bip2HtOZxSu_beoOGapb-122">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-60" value="新規投稿画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-560" y="40" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-62" value="次のホーム画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFE6CC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-800" y="190" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-63" value="自＋フォロー投稿一覧" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-62">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-130" value="いいね登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-62">
+          <mxGeometry x="10" y="60" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-94" value="検索" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-65" target="bip2HtOZxSu_beoOGapb-93">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-65" value="投稿検索画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-560" y="200" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-88" value="ページネーション" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-66" target="bip2HtOZxSu_beoOGapb-75">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-98" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-66" target="bip2HtOZxSu_beoOGapb-97">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-340" y="410" />
+              <mxPoint x="-340" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-100" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-66" target="bip2HtOZxSu_beoOGapb-99">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-360" y="420" />
+              <mxPoint x="-360" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-111" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-66" target="bip2HtOZxSu_beoOGapb-103">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-370" y="430" />
+              <mxPoint x="-370" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-112" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-66" target="bip2HtOZxSu_beoOGapb-107">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-380" y="440" />
+              <mxPoint x="-380" y="1220" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-66" value="自プロフィール画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-560" y="360" width="160" height="120" as="geometry">
+            <mxRectangle x="-560" y="360" width="150" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-68" value="自投稿一覧" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-66">
+          <mxGeometry x="10" y="26" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-69" value="フォロー数" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-66">
+          <mxGeometry x="10" y="45" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-70" value="フォロワー数" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-66">
+          <mxGeometry x="10" y="65" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-87" value="ページネーション" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-71" target="bip2HtOZxSu_beoOGapb-82">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-101" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-71" target="bip2HtOZxSu_beoOGapb-99">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-113" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-71" target="bip2HtOZxSu_beoOGapb-103">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-340" y="750" />
+              <mxPoint x="-340" y="880" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-114" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-71" target="bip2HtOZxSu_beoOGapb-107">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-350" y="760" />
+              <mxPoint x="-350" y="1200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-71" value="他プロフィール画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-560" y="680" width="160" height="120" as="geometry">
+            <mxRectangle x="-560" y="360" width="150" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-72" value="他投稿一覧" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry x="10" y="26" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-73" value="フォロー数" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry x="10" y="45" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-74" value="フォロワー数" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry x="10" y="65" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-131" value="フォロー登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry x="10" y="90" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-75" value="次の自プロフィール画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-560" y="510" width="160" height="120" as="geometry">
+            <mxRectangle x="-560" y="360" width="150" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-76" value="次の自投稿一覧" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-75">
+          <mxGeometry x="10" y="26" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-77" value="フォロー数" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-75">
+          <mxGeometry x="10" y="45" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-78" value="フォロワー数" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-75">
+          <mxGeometry x="10" y="65" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-82" value="次の他プロフィール画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#FFFFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-560" y="830" width="160" height="120" as="geometry">
+            <mxRectangle x="-560" y="360" width="150" height="30" as="alternateBounds" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-83" value="次の他投稿一覧" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-82">
+          <mxGeometry x="10" y="26" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-84" value="フォロー数" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-82">
+          <mxGeometry x="10" y="45" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-85" value="フォロワー数" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-82">
+          <mxGeometry x="10" y="65" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-132" value="フォロー登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-82">
+          <mxGeometry x="10" y="90" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-96" value="ページネーション" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-93" target="bip2HtOZxSu_beoOGapb-95">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-102" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-93" target="bip2HtOZxSu_beoOGapb-99">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-100" y="260" />
+              <mxPoint x="-100" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-128" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-93" target="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-110" y="270" />
+              <mxPoint x="-110" y="500" />
+              <mxPoint x="-390" y="500" />
+              <mxPoint x="-390" y="640" />
+              <mxPoint x="-500" y="640" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-93" value="検索結果画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="200" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-95" value="次の検索結果画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="350" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-120" value="編集" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-97" target="bip2HtOZxSu_beoOGapb-119">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-97" value="自投稿編集画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="520" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-118" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-99" target="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-150" y="730" />
+              <mxPoint x="-150" y="670" />
+              <mxPoint x="-470" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-99" value="投稿詳細画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="680" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-136" value="いいね登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-99">
+          <mxGeometry x="10" y="26" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-109" value="ページネーション" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-103" target="bip2HtOZxSu_beoOGapb-106">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-116" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-103" target="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-140" y="900" />
+              <mxPoint x="-140" y="660" />
+              <mxPoint x="-480" y="660" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-103" value="フォロー一覧画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="840" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-137" value="フォロー登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-103">
+          <mxGeometry x="5" y="25" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-106" value="次のフォロー一覧画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="990" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-138" value="フォロー登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-106">
+          <mxGeometry x="5" y="30" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-110" value="ページネーション" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-107" target="bip2HtOZxSu_beoOGapb-108">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-117" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-107" target="bip2HtOZxSu_beoOGapb-71">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-130" y="1220" />
+              <mxPoint x="-130" y="650" />
+              <mxPoint x="-490" y="650" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-107" value="フォロワー一覧画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="1160" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-139" value="フォロー登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-107">
+          <mxGeometry x="5" y="30" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-108" value="次のフォロワー一覧画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="1310" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-140" value="フォロー登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-108">
+          <mxGeometry x="5" y="30" width="130" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-127" value="投稿" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="bip2HtOZxSu_beoOGapb-119" target="bip2HtOZxSu_beoOGapb-125">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-119" value="編集確認画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#CCFFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-80" y="520" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-122" value="ホーム画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E6FFCC;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="-320" y="40" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-123" value="自＋フォロー投稿一覧" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-122">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-133" value="いいね登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-122">
+          <mxGeometry x="10" y="55" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-125" value="ホーム画面" style="swimlane;whiteSpace=wrap;html=1;fillColor=#CCFFE6;strokeColor=#999999;" vertex="1" parent="1">
+          <mxGeometry x="160" y="520" width="160" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-126" value="自＋フォロー投稿一覧" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-125">
+          <mxGeometry x="10" y="30" width="140" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="bip2HtOZxSu_beoOGapb-134" value="いいね登録・解除" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="bip2HtOZxSu_beoOGapb-125">
+          <mxGeometry x="10" y="55" width="120" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
