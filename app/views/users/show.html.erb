@@ -3,3 +3,6 @@
 <p>id: <%= @user.id %></p>
 <p>Email: <%= @user.email %></p>
 <p>Password: <%= @user.password %></p>
+
+<%= link_to '戻る', users_path %>
+<%= link_to 'ユーザー情報編集', edit_user_path(@user) %>
