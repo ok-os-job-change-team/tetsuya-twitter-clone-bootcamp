@@ -1,7 +1,6 @@
-# 404ページと500ページ
+# 404ページ
 class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
-  rescue_from ActionController::RoutingError, with: :render_not_found
 
   private
 
