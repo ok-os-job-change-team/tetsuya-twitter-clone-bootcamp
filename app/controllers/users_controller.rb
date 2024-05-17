@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in @user
       redirect_to @user, notice: 'アカウントの作成に成功しました'
     else
       flash.now[:alert] = 'アカウントの作成に失敗しました'
