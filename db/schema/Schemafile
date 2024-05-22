@@ -1,1 +1,2 @@
 require 'user.schema'
+require 'post.schema'
