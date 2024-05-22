@@ -1,1 +1,2 @@
 require 'user.schema'
+require 'article.schema'

@@ -1,0 +1,24 @@
+```mermaid
+erDiagram
+
+%% 1:0or多
+users ||--o{ articles: "1:n"
+
+users {
+  INT id
+  VARCHAR email
+  VARCHAR password_digest
+  VARCHAR remember_digest
+  DATETIME created_at
+  DATETIME updated_at
+}
+
+articles {
+  INT id
+  INT user_id
+  VARCHAR title
+  VARCHAR content
+  DATETIME created_at
+  DATETIME updated_at
+}
+```
