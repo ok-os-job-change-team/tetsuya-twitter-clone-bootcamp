@@ -25,7 +25,6 @@ class SessionsController < ApplicationController
 
   def log_in_and_redirect(user)
     log_in user
-    session_params[:remember_me] == '1' ? remember(user) : forget(user)
     redirect_to user
   end
 

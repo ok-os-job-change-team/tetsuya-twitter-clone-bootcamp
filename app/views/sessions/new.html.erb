@@ -15,13 +15,6 @@
       <%= f.label :password %>
       <%= f.password_field :password, class: 'form-control' %>
 
-      <div class="checkbox inline">
-        <%= f.check_box :remember_me %>
-        <%= f.label :remember_me do %>
-          <span>このブラウザでログインを保持する</span>
-        <% end %>
-      </div>
-
       <%= f.submit 'ログイン', class: 'btn btn-primary' %>
     <% end %>
 

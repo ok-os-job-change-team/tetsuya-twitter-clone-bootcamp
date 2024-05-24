@@ -30,13 +30,6 @@ RSpec.describe 'sessions/new.html.erb', type: :view do
     end
   end
 
-  it 'remember_meチェックボックスが表示される' do
-    aggregate_failures do
-      expect(rendered).to have_selector('label', text: 'このブラウザでログインを保持する')
-      expect(rendered).to have_selector('input[type=checkbox][name="session[remember_me]"]')
-    end
-  end
-
   it 'ログインボタンが表示される' do
     expect(rendered).to have_selector('input[type=submit][value="ログイン"]')
   end
