@@ -13,7 +13,7 @@
 ActiveRecord::Schema[7.1].define(version: 0) do
   create_table "posts", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "記事", force: :cascade do |t|
     t.integer "user_id", null: false, comment: "投稿者ID"
-    t.string "title", default: "", null: false, comment: "タイトル"
+    t.string "title", default: "無題", null: false, comment: "タイトル"
     t.string "content", null: false, comment: "記事本文"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

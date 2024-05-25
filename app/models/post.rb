@@ -1,14 +1,3 @@
-# Postクラスは記事を表す
-# このクラスは、Userに属し、titleとcontentを持つ
-# titleとcontentの長さに制限がある
-#
-# == アソシエーション
-# - belongs_to :user
-#
-# == バリデーション
-# - user_idの存在を確認
-# - titleの存在と長さ（最大30文字）を確認
-# - contentの存在と長さ（最大140文字）を確認
 class Post < ApplicationRecord
   belongs_to :user
 
