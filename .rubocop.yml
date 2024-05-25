@@ -8,3 +8,6 @@ require:
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*"
+
+Documentation:
+  Enabled: false

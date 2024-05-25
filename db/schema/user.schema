@@ -1,8 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 create_table 'users', charset: 'utf8mb4', collation: 'utf8mb4_bin', comment: 'ユーザー', force: :cascade do |t|
-  t.string 'email', default: '', null: false, comment: 'メールアドレス'
+  t.string 'email', null: false, comment: 'メールアドレス'
   t.string 'password_digest', null: false, comment: 'パスワード'
-  t.string 'remember_digest', null: true, comment: '記憶トークン'
   t.timestamps
 end

@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :check_logged_in, only: %i[index show]
+  before_action :check_edit_authority, only: %i[edit update destroy]
+
   # GET /users
   def index
     @users = User.all
