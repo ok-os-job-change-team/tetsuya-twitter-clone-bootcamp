@@ -65,12 +65,12 @@ RSpec.configure do |config|
 
   # "FactoryBot."を省略する
   config.include FactoryBot::Syntax::Methods
-end
 
-# shoulda-machersを使う
-Shoulda::Matchers.configure do |config|
-  config.integrate do |with|
-    with.test_framework :rspec
-    with.library :rails
+  # shoulda-machersを使う
+  Shoulda::Matchers.configure do |shoulda_config|
+    shoulda_config.integrate do |with|
+      with.test_framework :rspec
+      with.library :rails
+    end
   end
 end

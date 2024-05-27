@@ -1,3 +1,5 @@
+<% provide(:title, 'User詳細') %>
+<%= render 'shared/header' %>
 <h1>User 詳細</h1>
 
 <p>id: <%= @user.id %></p>
@@ -5,4 +7,3 @@
 
 <%= link_to 'ユーザー一覧', users_path %>
 <%= link_to 'ユーザー情報編集', edit_user_path(@user) %>
-<%= button_to 'ログアウト', logout_path, method: :delete %>

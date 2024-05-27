@@ -1,0 +1,20 @@
+<% provide(:title, 'Home') %>
+<%= render 'shared/header' %>
+
+<h1>ポスト</h1>
+
+<div class="posts_wrapper">
+  <% @posts.each do |post| %>
+    <table class="post">
+      <tr class="post_user">
+        <td><%= link_to post.user.email, user_path(post.user) %></td>
+      </tr>
+      <tr class="post_title">
+        <td><%= link_to post.title, post_path(post) %></td>
+      </tr>
+      <tr class="post_content">
+        <td><%= post.content %></td>
+      </tr>
+    </table>
+  <% end %>
+</div>
