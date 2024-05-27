@@ -3,11 +3,10 @@ RSpec.describe Post, type: :model do
 
   describe '#validation' do
     context '属性が全て有効な値であるとき' do
-      let!(:post) { create(:post, user_id: user.id) }
+      let!(:post) { build(:post, user_id: user.id) }
 
       it 'postが有効であり、errorsが空である' do
         aggregate_failures do
-          post.valid?
           expect(post.valid?).to be true
           expect(post.errors.full_messages).to eq([])
         end
@@ -19,7 +18,7 @@ RSpec.describe Post, type: :model do
 
       it 'errorsに「titleが空であるエラー」が格納される' do
         aggregate_failures do
-          post.valid?
+          expect(post.valid?).to be false
           expect(post.errors.details[:title]).to include(error: :blank)
           expect(post.errors.full_messages_for(:title)).to eq(["Title can't be blank"])
         end
@@ -27,7 +26,7 @@ RSpec.describe Post, type: :model do
     end
 
     context 'titleが31字であるとき' do
-      let!(:post) { build(:post, title: '0123456789012345678901234567890', user_id: user.id) }
+      let!(:post) { build(:post, title: Faker::Lorem.characters(number: 31), user_id: user.id) }
 
       it 'errorsに「titleの文字数が多すぎるエラー」が格納される' do
         aggregate_failures do
@@ -51,8 +50,7 @@ RSpec.describe Post, type: :model do
     end
 
     context 'contentが141字であるとき' do
-      content = '012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890'
-      let!(:post) { build(:post, content:, user_id: user.id) }
+      let!(:post) { build(:post, content: Faker::Lorem.characters(number: 141), user_id: user.id) }
 
       it 'errorsに「contentの文字数が多すぎるエラー」が格納される' do
         aggregate_failures do

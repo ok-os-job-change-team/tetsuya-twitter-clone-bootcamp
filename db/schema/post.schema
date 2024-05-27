@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 create_table 'posts', charset: 'utf8mb4', collation: 'utf8mb4_bin', comment: '投稿', force: :cascade do |t|
   t.integer 'user_id', null: false, comment: '投稿者ID'
-  t.string 'title', default: '無題', null: false, comment: 'タイトル'
-  t.string 'content', null: false, comment: '記事本文'
+  t.string 'title', null: false, comment: 'タイトル'
+  t.string 'content', null: false, comment: '投稿本文'
   t.timestamps
 end

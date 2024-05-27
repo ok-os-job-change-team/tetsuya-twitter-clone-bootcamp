@@ -61,6 +61,9 @@ group :development, :test do
 
   # https://github.com/deivid-rodriguez/pry-byebug
   gem 'pry-byebug'
+
+  # ダミーデータ [https://github.com/faker-ruby/faker]
+  gem 'faker'
 end
 
 group :development do

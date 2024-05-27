@@ -8,7 +8,6 @@ users {
   INT id
   VARCHAR email
   VARCHAR password_digest
-  VARCHAR remember_digest
   DATETIME created_at
   DATETIME updated_at
 }
