@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  # sessions_helperのメソッドを継承する
+  # sessions_helperのメソッドをMIXINする
   include SessionsHelper
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found

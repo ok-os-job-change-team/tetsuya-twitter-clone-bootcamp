@@ -19,7 +19,7 @@ class SessionsController < ApplicationController
   private
 
   def session_params
-    params.require(:session).permit(:email, :password, :remember_me)
+    params.require(:session).permit(:email, :password)
   end
 
   def handle_invalid_login

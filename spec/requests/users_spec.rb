@@ -1,10 +1,14 @@
 RSpec.describe UsersController, type: :request do
   let!(:user) { create(:user) }
 
-  describe 'GET /users' do
+  shared_context 'userでログインする' do
     before do
       post login_path, params: { session: { email: user.email, password: user.password } }
     end
+  end
+
+  describe 'GET /users' do
+    include_context 'userでログインする'
 
     it 'アクセスに成功する' do
       aggregate_failures do
@@ -16,9 +20,7 @@ RSpec.describe UsersController, type: :request do
   end
 
   describe 'GET /users/:id' do
-    before do
-      post login_path, params: { session: { email: user.email, password: user.password } }
-    end
+    include_context 'userでログインする'
 
     it 'アクセスに成功する' do
       aggregate_failures do
@@ -64,9 +66,7 @@ RSpec.describe UsersController, type: :request do
   end
 
   describe 'GET /users/:id/edit' do
-    before do
-      post login_path, params: { session: { email: user.email, password: user.password } }
-    end
+    include_context 'userでログインする'
 
     context '存在するuserにアクセスするとき' do
       it 'アクセスに成功する' do
@@ -87,9 +87,7 @@ RSpec.describe UsersController, type: :request do
   end
 
   describe 'PUT /users/:id' do
-    before do
-      post login_path, params: { session: { email: user.email, password: user.password } }
-    end
+    include_context 'userでログインする'
 
     context '有効なパラメータのとき' do
       it 'ユーザーを更新する' do
@@ -115,9 +113,7 @@ RSpec.describe UsersController, type: :request do
   end
 
   describe 'DELETE /users/:id' do
-    before do
-      post login_path, params: { session: { email: user.email, password: user.password } }
-    end
+    include_context 'userでログインする'
 
     context 'ユーザーが存在するとき' do
       it 'ユーザーを削除する' do
