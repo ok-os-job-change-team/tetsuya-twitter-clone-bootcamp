@@ -1,5 +1,7 @@
-# 404ページ
 class ApplicationController < ActionController::Base
+  # sessions_helperのメソッドをMIXINする
+  include SessionsHelper
+
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   private

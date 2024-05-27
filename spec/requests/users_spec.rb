@@ -1,10 +1,18 @@
 RSpec.describe UsersController, type: :request do
+  let!(:user) { create(:user) }
+
+  shared_context 'userでログインする' do
+    before do
+      post login_path, params: { session: { email: user.email, password: user.password } }
+    end
+  end
+
   describe 'GET /users' do
-    let!(:user) { create(:user) }
+    include_context 'userでログインする'
 
     it 'アクセスに成功する' do
       aggregate_failures do
-        get users_url
+        get users_path
         expect(response).to have_http_status(:success)
         expect(response.body).to include user.email
       end
@@ -12,11 +20,11 @@ RSpec.describe UsersController, type: :request do
   end
 
   describe 'GET /users/:id' do
-    let!(:user) { create(:user) }
+    include_context 'userでログインする'
 
     it 'アクセスに成功する' do
       aggregate_failures do
-        get user_url user.id
+        get user_path user.id
         expect(response).to have_http_status(:success)
         expect(response.body).to include user.email
       end
@@ -34,12 +42,12 @@ RSpec.describe UsersController, type: :request do
   end
 
   describe 'POST /users' do
-    let!(:user) { build(:user) }
+    let!(:other_user) { build(:other_user) }
 
     it '新規ユーザーを作成する' do
       aggregate_failures do
         expect do
-          post users_path, params: { user: attributes_for(:user) }
+          post users_path, params: { user: attributes_for(:other_user) }
         end.to change(User, :count).by(1)
         expect(response).to redirect_to(User.last)
       end
@@ -49,7 +57,7 @@ RSpec.describe UsersController, type: :request do
       it '新規ユーザーを作成しない' do
         aggregate_failures do
           expect do
-            post users_path, params: { user: attributes_for(:user, email: nil) }
+            post users_path, params: { user: attributes_for(:other_user, email: nil) }
           end.not_to change(User, :count)
           expect(response.body).to include '新規登録'
         end
@@ -58,7 +66,7 @@ RSpec.describe UsersController, type: :request do
   end
 
   describe 'GET /users/:id/edit' do
-    let!(:user) { create(:user) }
+    include_context 'userでログインする'
 
     context '存在するuserにアクセスするとき' do
       it 'アクセスに成功する' do
@@ -71,17 +79,15 @@ RSpec.describe UsersController, type: :request do
     end
 
     context '存在しないuserにアクセスするとき' do
-      it '404ページを読み込む' do
-        aggregate_failures do
-          get edit_user_path('hoge')
-          expect(response.response_code).to eq(404)
-        end
+      it 'ユーザー一覧に移動する' do
+        get edit_user_path('hoge')
+        expect(response).to redirect_to(users_url)
       end
     end
   end
 
   describe 'PUT /users/:id' do
-    let!(:user) { create(:user) }
+    include_context 'userでログインする'
 
     context '有効なパラメータのとき' do
       it 'ユーザーを更新する' do
@@ -107,9 +113,9 @@ RSpec.describe UsersController, type: :request do
   end
 
   describe 'DELETE /users/:id' do
-    context 'ユーザーが存在するとき' do
-      let!(:user) { create(:user) }
+    include_context 'userでログインする'
 
+    context 'ユーザーが存在するとき' do
       it 'ユーザーを削除する' do
         expect do
           delete user_path(user)

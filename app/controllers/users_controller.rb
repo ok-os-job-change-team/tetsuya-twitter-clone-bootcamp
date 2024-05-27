@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  before_action :check_logged_in, only: %i[index show]
+  before_action :check_edit_authority, only: %i[edit update destroy]
+
   # GET /users
   def index
     @users = User.all
@@ -18,6 +21,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in @user
       redirect_to @user, notice: 'アカウントの作成に成功しました'
     else
       flash.now[:alert] = 'アカウントの作成に失敗しました'
