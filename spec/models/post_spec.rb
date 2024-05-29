@@ -14,13 +14,12 @@ RSpec.describe Post, type: :model do
     end
 
     context 'titleがnilであるとき' do
-      let!(:post) { build(:post, title: nil, user_id: user.id) }
+      let!(:post) { create(:post, title: nil, user_id: user.id) }
 
-      it 'errorsに「titleが空であるエラー」が格納される' do
+      it 'titleがデフォルト値「無題」となる' do
         aggregate_failures do
-          expect(post.valid?).to be false
-          expect(post.errors.details[:title]).to include(error: :blank)
-          expect(post.errors.full_messages_for(:title)).to eq(["Title can't be blank"])
+          expect(post.valid?).to be true
+          expect(post.reload.title).to eq('無題')
         end
       end
     end
@@ -30,7 +29,7 @@ RSpec.describe Post, type: :model do
 
       it 'errorsに「titleの文字数が多すぎるエラー」が格納される' do
         aggregate_failures do
-          post.valid?
+          expect(post.valid?).to be false
           expect(post.errors.details[:title]).to include(a_hash_including(error: :too_long))
           expect(post.errors.full_messages_for(:title)).to eq(['Title is too long (maximum is 30 characters)'])
         end
@@ -42,7 +41,7 @@ RSpec.describe Post, type: :model do
 
       it 'errorsに「contentが空であるエラー」が格納される' do
         aggregate_failures do
-          post.valid?
+          expect(post.valid?).to be false
           expect(post.errors.details[:content]).to include(error: :blank)
           expect(post.errors.full_messages_for(:content)).to eq(["Content can't be blank"])
         end
@@ -54,7 +53,7 @@ RSpec.describe Post, type: :model do
 
       it 'errorsに「contentの文字数が多すぎるエラー」が格納される' do
         aggregate_failures do
-          post.valid?
+          expect(post.valid?).to be false
           expect(post.errors.details[:content]).to include(a_hash_including(error: :too_long))
           expect(post.errors.full_messages_for(:content)).to eq(['Content is too long (maximum is 140 characters)'])
         end
