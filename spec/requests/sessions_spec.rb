@@ -14,7 +14,7 @@ RSpec.describe 'Sessions', type: :request do
         aggregate_failures do
           post login_path, params: { session: { email: user.email, password: user.password } }
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(user_url(user))
+          expect(response).to redirect_to(posts_url)
         end
       end
     end
