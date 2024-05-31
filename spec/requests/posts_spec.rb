@@ -125,4 +125,81 @@ RSpec.describe PostsController, type: :request do
       end
     end
   end
+
+  describe 'GET /posts/:id/edit' do
+    include_context 'userでログインする'
+
+    context 'ログインユーザーが自身の投稿編集ページにアクセスするとき' do
+      let!(:user_post) { create(:post, user_id: user.id) }
+
+      it 'アクセスに成功する' do
+        aggregate_failures do
+          get edit_post_path(user_post)
+          expect(response).to have_http_status(:success)
+          expect(response.body).to include '投稿編集'
+        end
+      end
+    end
+
+    context 'ログインユーザーが他者の投稿編集ページにアクセスするとき' do
+      let!(:other_user) { create(:other_user) }
+      let!(:other_user_post) { create(:post, user_id: other_user.id) }
+
+      it '投稿詳細画面にリダイレクトされる' do
+        aggregate_failures do
+          get edit_post_path(other_user_post)
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to(post_url(other_user_post))
+          expect(flash[:alert]).to include '権限がありません'
+        end
+      end
+    end
+  end
+
+  describe 'PUT /posts/:id' do
+    include_context 'userでログインする'
+    let!(:user_post) { create(:post, user_id: user.id) }
+
+    context 'ログインユーザーが自身の投稿を更新するとき' do
+      context '更新内容が正常なパラメータのとき' do
+        it '更新に成功する' do
+          aggregate_failures do
+            put post_path(user_post.id), params: { post: { title: 'new title', content: 'new content' } }
+            expect(user_post.reload.title).to eq('new title')
+            expect(user_post.reload.content).to eq('new content')
+            expect(response).to redirect_to(post_url(user_post))
+            expect(flash[:notice]).to include '投稿内容を更新しました'
+          end
+        end
+      end
+
+      context 'contentがnilのとき' do
+        it '投稿は更新されず、投稿詳細画面にリダイレクトされる' do
+          aggregate_failures do
+            put post_path(user_post.id), params: { post: { content: nil } }
+            expect(user_post.reload.title).to eq(user_post.title)
+            expect(user_post.reload.content).to eq(user_post.content)
+            expect(response).to have_http_status(:unprocessable_entity)
+            expect(flash[:alert]).to include '投稿内容の更新に失敗しました'
+          end
+        end
+      end
+    end
+
+    context 'ログインユーザーが他者の投稿を更新するとき' do
+      let!(:other_user) { create(:other_user) }
+      let!(:other_user_post) { create(:post, user_id: other_user.id) }
+
+      it '投稿は更新されず、投稿詳細画面にリダイレクトされる' do
+        aggregate_failures do
+          put post_path(other_user_post.id), params: { post: { title: 'new title', content: 'new content' } }
+          expect(other_user_post.reload.title).to eq(other_user_post.title)
+          expect(other_user_post.reload.content).to eq(other_user_post.content)
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to(post_url(other_user_post))
+          expect(flash[:alert]).to include '権限がありません'
+        end
+      end
+    end
+  end
 end

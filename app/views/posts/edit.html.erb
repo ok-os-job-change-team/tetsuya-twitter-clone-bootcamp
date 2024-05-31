@@ -1,7 +1,7 @@
-<% provide(:title, '新規ポスト') %>
+<% provide(:title, '投稿編集') %>
 <%= render 'shared/header' %>
 
-<h1>新規ポスト</h1>
+<h1>投稿編集</h1>
 
 <%= render 'layouts/flash' %>
 
@@ -27,6 +27,8 @@
   </div>
 
   <div class="actions">
-    <%= form.submit '投稿する' %>
+    <%= form.submit '編集を確定する' %>
   </div>
 <% end %>
+
+<%= link_to '戻る', post_path(@post) %>
