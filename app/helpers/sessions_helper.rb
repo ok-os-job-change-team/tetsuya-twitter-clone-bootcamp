@@ -15,6 +15,7 @@ module SessionsHelper
     return if logged_in?
 
     redirect_to login_url
+    flash[:alert] = 'ログインしてください'
   end
 
   def check_edit_authority
