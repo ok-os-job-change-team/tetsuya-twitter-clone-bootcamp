@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: session_params[:email])
     if user&.authenticate(session_params[:password])
       log_in user
-      redirect_to user
+      redirect_to posts_url
     else
       handle_invalid_login
     end

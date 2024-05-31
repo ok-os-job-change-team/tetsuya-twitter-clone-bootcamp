@@ -22,6 +22,7 @@ module SessionsHelper
     return if current_user&.id == params[:id].to_i
 
     redirect_to users_url
+    flash[:alert] = '権限がありません'
   end
 
   def log_out

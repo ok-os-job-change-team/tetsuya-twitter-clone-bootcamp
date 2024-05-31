@@ -1,8 +1,5 @@
 <%= form_with(model: @user, local: true) do |form| %>
   <div>
-  <h3>
-    <%= flash[:alert] %> 
-  </h3>
     <ul>
     <% @user.errors.full_messages.each do |message| %>
       <li><%= message %></li>
