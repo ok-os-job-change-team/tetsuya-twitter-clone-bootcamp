@@ -61,6 +61,9 @@ group :development, :test do
 
   # https://github.com/deivid-rodriguez/pry-byebug
   gem 'pry-byebug'
+
+  # ダミーデータ [https://github.com/faker-ruby/faker]
+  gem 'faker'
 end
 
 group :development do
@@ -91,4 +94,7 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+
+  # バリデーションテスト[https://github.com/thoughtbot/shoulda-matchers]
+  gem 'shoulda-matchers', '~> 6.0'
 end
