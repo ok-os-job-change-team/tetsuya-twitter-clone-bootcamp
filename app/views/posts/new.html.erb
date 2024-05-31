@@ -1,0 +1,32 @@
+<% provide(:title, '新規投稿') %>
+<%= render 'shared/header' %>
+
+<h1>新規投稿</h1>
+
+<%= render 'layouts/flash' %>
+
+<%= form_with(model: @post, local: true) do |form| %>
+  <div>
+    <ul>
+    <% @post.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="field">
+    <%= form.label 'タイトル' %>
+    <br>
+    <%= form.text_field :title, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label '本文' %>
+    <br>
+    <%= form.text_field :content %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit '投稿する' %>
+  </div>
+<% end %>
