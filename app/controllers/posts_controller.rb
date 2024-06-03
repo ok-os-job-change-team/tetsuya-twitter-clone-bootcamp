@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   before_action :check_logged_in, only: %i[index show new create]
-  before_action :authorize_post_edit, only: %i[edit update]
+  before_action :authorize_post_edit, only: %i[edit update destroy]
 
   # GET /posts
   def index
@@ -43,6 +43,17 @@ class PostsController < ApplicationController
     else
       flash.now[:alert] = '投稿内容の更新に失敗しました'
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+  # DELETE /posts/:id
+  def destroy
+    @post = current_user.posts.find_by(id: params[:id])
+
+    if @post.destroy
+      redirect_to posts_url, notice: '投稿を削除しました', status: :see_other
+    else
+      redirect_to @post, alert: '投稿の削除に失敗しました'
     end
   end
 

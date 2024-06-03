@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   resources :users, only: %i[index show new create edit update destroy]
-  resources :posts, only: %i[index show new create edit update]
+  resources :posts, only: %i[index show new create edit update destroy]
 
   get '*not_found', to: 'application#routing_error'
   post '*not_found', to: 'application#routing_error'
