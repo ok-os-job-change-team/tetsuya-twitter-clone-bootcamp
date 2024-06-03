@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   before_action :check_logged_in, only: %i[index show new create]
+  before_action :set_post, only: %i[edit update]
   before_action :authorize_post_edit, only: %i[edit update]
 
   # GET /posts
@@ -30,15 +31,11 @@ class PostsController < ApplicationController
   end
 
   # GET /posts/:id/edit
-  def edit
-    @post = Post.find(params[:id])
-  end
+  def edit; end
 
   # PUT /posts/:id
   def update
-    @post = Post.find(params[:id])
-
-    if @post.update(post_params)
+    if @post&.update(post_params)
       redirect_to @post, notice: '投稿内容を更新しました'
     else
       flash.now[:alert] = '投稿内容の更新に失敗しました'
@@ -52,8 +49,12 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :content).merge(user_id: current_user.id)
   end
 
+  def set_post
+    @post = current_user.posts.find_by(id: params[:id])
+    redirect_to posts_url, alert: '投稿が見つかりません' unless @post
+  end
+
   def authorize_post_edit
-    post = Post.find(params[:id])
-    check_edit_authority(user_id: post.user_id, redirect_url: post_url(post))
+    check_edit_authority(user_id: @post.user_id, redirect_url: post_url(@post))
   end
 end
