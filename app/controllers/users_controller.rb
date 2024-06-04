@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :check_logged_in, only: %i[index show]
-  before_action :check_edit_authority, only: %i[edit update destroy]
+  before_action :authorize_user_edit, only: %i[edit update destroy]
 
   # GET /users
   def index
@@ -64,5 +64,9 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password)
+  end
+
+  def authorize_user_edit
+    check_edit_authority(user_id: params[:id], redirect_url: users_url)
   end
 end

@@ -18,10 +18,10 @@ module SessionsHelper
     flash[:alert] = 'ログインしてください'
   end
 
-  def check_edit_authority
-    return if current_user&.id == params[:id].to_i
+  def check_edit_authority(user_id:, redirect_url:)
+    return if current_user&.id == user_id.to_i
 
-    redirect_to users_url
+    redirect_to redirect_url
     flash[:alert] = '権限がありません'
   end
 

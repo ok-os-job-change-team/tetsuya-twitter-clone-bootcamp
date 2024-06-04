@@ -1,9 +1,23 @@
-<% provide(:title, 'ポスト' + @post.title) %>
+<% provide(:title, 'ポスト詳細' + @post.title) %>
 <%= render 'shared/header' %>
 
 <%= render 'layouts/flash' %>
 
-<h2><%= @post.title %></h2>
-<p><%= @post.content %></p>
-<p><%= link_to @post.user.email, user_path(@post.user) %></p>
-<p><%= link_to 'ポスト一覧', posts_path %></p>
+<table class="post">
+  <tr>
+    <th><%= @post.title %></th>
+  </tr>
+  <tr>
+    <td><%= link_to @post.user.email, user_path(@post.user) %></td>
+  </tr>
+  <tr>
+    <td><%= @post.content %></td>
+  </tr>
+</table>
+
+<ul>
+  <li><%= link_to 'ポスト一覧', posts_path %></li>
+  <% if session[:user_id] == @post.user_id %>
+    <li><%= link_to 'ポスト編集', edit_post_path(@post.id) %></li>
+  <% end %>
+</ul>
