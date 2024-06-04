@@ -145,12 +145,12 @@ RSpec.describe PostsController, type: :request do
       let!(:other_user) { create(:other_user) }
       let!(:other_user_post) { create(:post, user_id: other_user.id) }
 
-      it '投稿一覧画面にリダイレクトされる' do
+      it '投稿詳細画面にリダイレクトされる' do
         aggregate_failures do
           get edit_post_path(other_user_post)
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(posts_url)
-          expect(flash[:alert]).to include '投稿が見つかりません'
+          expect(response).to redirect_to(post_url(other_user_post))
+          expect(flash[:alert]).to include '権限がありません'
         end
       end
     end
@@ -196,8 +196,8 @@ RSpec.describe PostsController, type: :request do
           expect(other_user_post.reload.title).to eq(other_user_post.title)
           expect(other_user_post.reload.content).to eq(other_user_post.content)
           expect(response).to have_http_status(:found)
-          expect(response).to redirect_to(posts_url)
-          expect(flash[:alert]).to include '投稿が見つかりません'
+          expect(response).to redirect_to(post_url(other_user_post))
+          expect(flash[:alert]).to include '権限がありません'
         end
       end
     end
