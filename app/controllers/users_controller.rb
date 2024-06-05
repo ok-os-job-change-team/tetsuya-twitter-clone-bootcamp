@@ -52,12 +52,10 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     if @user.destroy
-      flash[:success] = 'ユーザーは削除されました'
+      redirect_to users_url, notice: 'ユーザーは削除されました', status: :see_other
     else
-      flash.now[:alert] = 'ユーザーの削除に失敗しました'
+      redirect_to users_url, alert: 'ユーザーの削除に失敗しました'
     end
-
-    redirect_to users_url
   end
 
   private

@@ -19,5 +19,6 @@
   <li><%= link_to 'ポスト一覧', posts_path %></li>
   <% if session[:user_id] == @post.user_id %>
     <li><%= link_to 'ポスト編集', edit_post_path(@post.id) %></li>
+    <li><%= link_to 'ポスト削除', post_path(@post.id), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %></li>
   <% end %>
 </ul>

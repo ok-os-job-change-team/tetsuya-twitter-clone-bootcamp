@@ -202,4 +202,39 @@ RSpec.describe PostsController, type: :request do
       end
     end
   end
+
+  describe 'DELETE /posts/:id' do
+    include_context 'userでログインする'
+
+    context 'ログインユーザーが自身の投稿を削除するとき' do
+      let!(:user_post) { create(:post, user_id: user.id) }
+
+      it '投稿が削除される' do
+        aggregate_failures do
+          expect do
+            delete post_path(user_post)
+          end.to change(Post, :count).by(-1)
+          expect(response).to have_http_status(:see_other)
+          expect(response).to redirect_to(posts_url)
+          expect(flash[:notice]).to include '投稿を削除しました'
+        end
+      end
+    end
+
+    context 'ログインユーザーが他者の投稿を削除するとき' do
+      let!(:other_user) { create(:other_user) }
+      let!(:other_user_post) { create(:post, user_id: other_user.id) }
+
+      it '投稿は削除されず、投稿一覧画面にリダイレクトされる' do
+        aggregate_failures do
+          expect do
+            delete post_path(other_user_post)
+          end.not_to change(Post, :count)
+          expect(response).to have_http_status(:found)
+          expect(response).to redirect_to(post_url(other_user_post))
+          expect(flash[:alert]).to include '権限がありません'
+        end
+      end
+    end
+  end
 end
