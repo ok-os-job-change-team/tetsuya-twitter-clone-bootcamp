@@ -1,0 +1,27 @@
+<% provide(:title, '検索') %>
+<%= render 'shared/header' %>
+
+<%= render 'layouts/flash' %>
+
+<%= form_with url: search_path, method: :get, local: true do |form| %>
+  <div>
+    <%= form.label :query, '検索' %>
+    <%= form.text_field :query %>
+    <%= form.submit '検索' %>
+  </div>
+<% end %>
+
+<% if @posts.present? %>
+  <h2><%= @query %> の検索結果</h2>
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <table>
+          <tr><td><%= link_to post.user.email, user_path(post.user) %></td></tr>
+          <tr><td><%= link_to post.title, post %></td></tr>
+          <tr><td><%= post.content %></td></tr>
+        </table>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
