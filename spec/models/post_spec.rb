@@ -33,7 +33,7 @@ RSpec.describe Post, type: :model do
         aggregate_failures do
           expect(post.valid?).to be false
           expect(post.errors.details[:title]).to include(a_hash_including(error: :too_long))
-          expect(post.errors.full_messages_for(:title)).to eq(['Title is too long (maximum is 30 characters)'])
+          expect(post.errors.full_messages_for(:title)).to eq(['Titleは30文字以内で入力してください'])
         end
       end
     end
@@ -45,7 +45,7 @@ RSpec.describe Post, type: :model do
         aggregate_failures do
           expect(post.valid?).to be false
           expect(post.errors.details[:content]).to include(error: :blank)
-          expect(post.errors.full_messages_for(:content)).to eq(["Content can't be blank"])
+          expect(post.errors.full_messages_for(:content)).to eq(['Contentを入力してください'])
         end
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe Post, type: :model do
         aggregate_failures do
           expect(post.valid?).to be false
           expect(post.errors.details[:content]).to include(a_hash_including(error: :too_long))
-          expect(post.errors.full_messages_for(:content)).to eq(['Content is too long (maximum is 140 characters)'])
+          expect(post.errors.full_messages_for(:content)).to eq(['Contentは140文字以内で入力してください'])
         end
       end
     end

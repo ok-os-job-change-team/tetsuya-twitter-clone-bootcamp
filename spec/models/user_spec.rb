@@ -21,7 +21,7 @@ RSpec.describe User, type: :model do
         aggregate_failures do
           user.valid?
           expect(user.errors.details[:email]).to include(error: :blank)
-          expect(user.errors.full_messages_for(:email)).to eq(["Email can't be blank"])
+          expect(user.errors.full_messages_for(:email)).to eq(['Emailを入力してください'])
         end
       end
     end
@@ -33,7 +33,7 @@ RSpec.describe User, type: :model do
         aggregate_failures do
           user.valid?
           expect(user.errors.details[:password]).to include(error: :blank)
-          expect(user.errors.full_messages_for(:password)).to eq(["Password can't be blank"])
+          expect(user.errors.full_messages_for(:password)).to eq(['Passwordを入力してください'])
         end
       end
     end
