@@ -2,6 +2,9 @@ class ApplicationController < ActionController::Base
   # sessions_helperのメソッドをMIXINする
   include SessionsHelper
 
+  # pagy gem
+  include Pagy::Backend
+
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   private
