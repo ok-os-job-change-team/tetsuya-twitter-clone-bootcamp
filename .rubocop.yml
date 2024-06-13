@@ -8,6 +8,7 @@ require:
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*"
+    - "config/environments/development.rb"
 
 Documentation:
   Enabled: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe UsersController, type: :request do
   let!(:user) { create(:user) }
 

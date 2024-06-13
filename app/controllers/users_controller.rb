@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UsersController < ApplicationController
   before_action :check_logged_in, only: %i[index show]
   before_action :authorize_user_edit, only: %i[edit update destroy]
