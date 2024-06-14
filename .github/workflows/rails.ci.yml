@@ -37,8 +37,7 @@ jobs:
 
       - name: Create DB
         run: |
-          docker compose up -d
-          sleep 10
+          docker compose up -d --wait
           docker compose run app rails db:create
           docker compose run app rake ridgepole:apply test
 
