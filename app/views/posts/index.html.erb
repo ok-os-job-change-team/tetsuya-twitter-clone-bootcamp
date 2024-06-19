@@ -5,18 +5,28 @@
 
 <%= render 'layouts/flash' %>
 
-<div class="posts_wrapper">
-  <% @posts.each do |post| %>
-    <table class="post">
-      <tr class="post_user">
-        <td><%= link_to post.user.email, user_path(post.user) %></td>
-      </tr>
-      <tr class="post_title">
-        <td><%= link_to post.title, post_path(post) %></td>
-      </tr>
-      <tr class="post_content">
-        <td><%= post.content %></td>
-      </tr>
-    </table>
+<%= form_with url: posts_path, method: :get, local: true do |form| %>
+  <div>
+    <%= form.label :query, '検索' %>
+    <%= form.text_field :query %>
+    <%= form.submit '検索' %>
+  </div>
+<% end %>
+<% if @posts.present? %>
+  <% if @query.blank? %>
+    <h2>全てのポスト</h2>
+  <% else %>
+    <h2><%= @query %> の検索結果</h2>
   <% end %>
-</div>
+  <ul>
+    <% @posts.each do |post| %>
+      <li>
+        <table>
+          <tr><td><%= link_to post.user.email, user_path(post.user) %></td></tr>
+          <tr><td><%= link_to post.title, post %></td></tr>
+          <tr><td><%= post.content %></td></tr>
+        </table>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

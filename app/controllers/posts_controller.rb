@@ -4,7 +4,18 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    @query = params[:query]
+    @posts = Post.all.limit(10)
+
+    return if @query.blank?
+
+    @posts = Post.search_by_content_or_title(@query)
+
+    flash.now[:notice] = if @posts.empty?
+                           "#{@query}に該当する結果はありません"
+                         else
+                           "#{@posts.length}件の検索結果が見つかりました"
+                         end
   end
 
   # GET /posts/:id

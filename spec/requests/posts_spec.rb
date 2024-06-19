@@ -32,6 +32,31 @@ RSpec.describe PostsController, type: :request do
         end
       end
     end
+
+    context '存在する結果を検索するとき' do
+      include_context 'userでログインする'
+
+      it '検索結果が表示される' do
+        aggregate_failures do
+          get posts_path, params: { query: user_post.content }
+          expect(response).to have_http_status(:ok)
+          expect(response.body).to include user_post.content
+          expect(flash[:notice]).to include '1件の検索結果が見つかりました'
+        end
+      end
+    end
+
+    context '存在しない結果を検索するとき' do
+      include_context 'userでログインする'
+
+      it '該当する投稿がないことが表示される' do
+        aggregate_failures do
+          get posts_path, params: { query: 'hoge' }
+          expect(response).to have_http_status(:ok)
+          expect(flash[:notice]).to include 'hogeに該当する結果はありません'
+        end
+      end
+    end
   end
 
   describe 'GET /post/:id' do
