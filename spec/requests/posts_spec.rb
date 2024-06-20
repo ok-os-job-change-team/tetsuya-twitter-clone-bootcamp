@@ -41,7 +41,6 @@ RSpec.describe PostsController, type: :request do
           get posts_path, params: { query: user_post.content }
           expect(response).to have_http_status(:ok)
           expect(response.body).to include user_post.content
-          expect(flash[:notice]).to include '1件の検索結果が見つかりました'
         end
       end
     end
