@@ -17,6 +17,8 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.string "content", null: false, comment: "投稿本文"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["content"], name: "index_posts_on_content"
+    t.index ["title"], name: "index_posts_on_title"
     t.index ["user_id"], name: "fk_rails_5b5ddfd518"
   end
 

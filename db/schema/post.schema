@@ -5,4 +5,7 @@ create_table :posts, charset: 'utf8mb4', collation: 'utf8mb4_bin', comment: '投
   t.string     :title,   null: false, default: '無題', comment: 'タイトル'
   t.string     :content, null: false, comment: '投稿本文'
   t.timestamps
+
+  add_index :posts, [:content]
+  add_index :posts, [:title]
 end
