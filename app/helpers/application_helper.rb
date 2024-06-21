@@ -1,8 +1,4 @@
 module ApplicationHelper
-  # pagy gem
-  include Pagy::Frontend
-
-  # ページタイトル
   BASE_TITLE = 'だべったー'.freeze
   def full_title(page_title)
     if page_title.blank?
