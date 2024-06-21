@@ -9,7 +9,8 @@ services:
     tty: true # コンテナの正常終了を阻止
     stdin_open: true
     depends_on:
-      - db # dbコンテナと接続
+      db:
+        condition: service_healthy # dbコンテナが正常起動後に起動する
     command: /bin/sh -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
 
   db:
@@ -30,7 +31,11 @@ services:
       - data-volume:/var/lib/mysql
       - ./conf/my.conf:/etc/mysql/conf.d/my.cnf
       - ./mysql:/sql
-
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   data-volume:
