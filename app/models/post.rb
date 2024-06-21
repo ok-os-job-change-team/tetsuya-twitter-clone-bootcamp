@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  POSTS_MAX = 10
+  PER_PAGE_NUMBER = 10
 
   belongs_to :user
 
@@ -11,7 +11,7 @@ class Post < ApplicationRecord
 
   def self.search_by_content_or_title(query)
     if query.blank?
-      limit(POSTS_MAX)
+      limit(PER_PAGE_NUMBER)
     else
       sanitized_query = sanitize_sql_like(query)
       sql = <<-SQL
