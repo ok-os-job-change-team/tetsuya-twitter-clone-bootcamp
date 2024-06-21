@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   # sessions_helperのメソッドをMIXINする
   include SessionsHelper

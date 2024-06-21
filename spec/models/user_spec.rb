@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe User, type: :model do
   describe '#validation' do
     context '属性が全て有効な値であるとき' do

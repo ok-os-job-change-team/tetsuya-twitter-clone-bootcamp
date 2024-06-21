@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Post, type: :model do
   let!(:user) { create(:user) }
 

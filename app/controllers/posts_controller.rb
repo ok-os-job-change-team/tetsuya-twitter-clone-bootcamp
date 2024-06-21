@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PostsController < ApplicationController
   before_action :check_logged_in, only: %i[index show new create]
   before_action :authorize_post_edit, only: %i[edit update destroy]

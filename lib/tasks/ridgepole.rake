@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :ridgepole do
   desc 'Apply database schema'
   task apply: :environment do
