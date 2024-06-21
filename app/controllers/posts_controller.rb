@@ -4,7 +4,7 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all
+    @pagy, @posts = pagy(Post.all, items: 10)
   end
 
   # GET /posts/:id
