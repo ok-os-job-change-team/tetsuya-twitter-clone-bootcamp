@@ -10,58 +10,101 @@ RSpec.describe PostsController, type: :request do
   end
 
   describe 'GET /posts' do
-    let!(:user_post) { create(:post, user_id: user.id) }
+    context 'ひとつのポストについて' do
+      let!(:user_post) { create(:post, user:) }
 
-    context 'ログイン状態でポスト一覧にアクセスするとき' do
-      include_context 'userでログインする'
+      context 'ログイン状態でポスト一覧にアクセスするとき' do
+        include_context 'userでログインする'
 
-      it 'アクセスに成功する' do
-        aggregate_failures do
-          get posts_path
-          expect(response).to have_http_status(:success)
-          expect(response.body).to include user_post.title
-          expect(response.body).to include user_post.content
+        it 'アクセスに成功する' do
+          aggregate_failures do
+            get posts_path
+            expect(response).to have_http_status(:success)
+            expect(response.body).to include user_post.title
+            expect(response.body).to include user_post.content
+          end
+        end
+      end
+
+      context 'ログインしないでポスト一覧にアクセスするとき' do
+        it 'ログインページにリダイレクトされる' do
+          aggregate_failures do
+            get posts_path
+            expect(response).to redirect_to(login_url)
+            expect(flash[:alert]).to eq('ログインしてください')
+          end
+        end
+      end
+
+      context '存在する結果を検索するとき' do
+        include_context 'userでログインする'
+
+        it '検索結果が表示される' do
+          aggregate_failures do
+            get posts_path, params: { query: user_post.content }
+            expect(response).to have_http_status(:ok)
+            expect(response.body).to include user_post.content
+          end
+        end
+      end
+
+      context '存在しない結果を検索するとき' do
+        include_context 'userでログインする'
+
+        it '該当する投稿がないことが表示される' do
+          aggregate_failures do
+            get posts_path, params: { query: 'hoge' }
+            expect(response).to have_http_status(:ok)
+            expect(flash[:notice]).to include 'hogeに該当する結果はありません'
+          end
         end
       end
     end
 
-    context 'ログインしないでポスト一覧にアクセスするとき' do
-      it 'ログインページにリダイレクトされる' do
-        aggregate_failures do
-          get posts_path
-          expect(response).to redirect_to(login_url)
-          expect(flash[:alert]).to eq('ログインしてください')
+    context '30件のポストについて' do
+      let!(:posts) { create_list(:post, 30, user:) } # 30件の投稿を作成
+
+      context 'ログイン状態でポスト一覧にアクセスするとき' do
+        include_context 'userでログインする'
+
+        context '1ページ目にアクセスするとき' do
+          it '1~10番目のポストが表示される' do
+            aggregate_failures do
+              get posts_path, params: { page: 1 }
+              expect(response).to have_http_status(:success)
+              expect(response.body).to include posts[0].content
+              expect(response.body).to include posts[9].content
+            end
+          end
         end
-      end
-    end
 
-    context '存在する結果を検索するとき' do
-      include_context 'userでログインする'
-
-      it '検索結果が表示される' do
-        aggregate_failures do
-          get posts_path, params: { query: user_post.content }
-          expect(response).to have_http_status(:ok)
-          expect(response.body).to include user_post.content
+        context '2ページ目にアクセスするとき' do
+          it '11~20番目のポストが表示される' do
+            aggregate_failures do
+              get posts_path, params: { page: 2 }
+              expect(response).to have_http_status(:success)
+              expect(response.body).to include posts[10].content
+              expect(response.body).to include posts[19].content
+            end
+          end
         end
-      end
-    end
 
-    context '存在しない結果を検索するとき' do
-      include_context 'userでログインする'
-
-      it '該当する投稿がないことが表示される' do
-        aggregate_failures do
-          get posts_path, params: { query: 'hoge' }
-          expect(response).to have_http_status(:ok)
-          expect(flash[:notice]).to include 'hogeに該当する結果はありません'
+        context '3ページ目にアクセスするとき' do
+          it '21~30番目のポストが表示される' do
+            aggregate_failures do
+              get posts_path, params: { page: 3 }
+              expect(response).to have_http_status(:success)
+              expect(response.body).to include posts[20].content
+              expect(response.body).to include posts[29].content
+            end
+          end
         end
       end
     end
   end
 
   describe 'GET /post/:id' do
-    let!(:user_post) { create(:post, user_id: user.id) }
+    let!(:user_post) { create(:post, user:) }
 
     context 'ログイン状態でポスト詳細にアクセスするとき' do
       include_context 'userでログインする'
@@ -156,7 +199,7 @@ RSpec.describe PostsController, type: :request do
     include_context 'userでログインする'
 
     context 'ログインユーザーが自身の投稿編集ページにアクセスするとき' do
-      let!(:user_post) { create(:post, user_id: user.id) }
+      let!(:user_post) { create(:post, user:) }
 
       it 'アクセスに成功する' do
         aggregate_failures do
@@ -169,7 +212,7 @@ RSpec.describe PostsController, type: :request do
 
     context 'ログインユーザーが他者の投稿編集ページにアクセスするとき' do
       let!(:other_user) { create(:other_user) }
-      let!(:other_user_post) { create(:post, user_id: other_user.id) }
+      let!(:other_user_post) { create(:post, user: other_user) }
 
       it '投稿詳細画面にリダイレクトされる' do
         aggregate_failures do
@@ -184,7 +227,7 @@ RSpec.describe PostsController, type: :request do
 
   describe 'PUT /posts/:id' do
     include_context 'userでログインする'
-    let!(:user_post) { create(:post, user_id: user.id) }
+    let!(:user_post) { create(:post, user:) }
 
     context 'ログインユーザーが自身の投稿を更新するとき' do
       context '更新内容が正常なパラメータのとき' do
@@ -214,7 +257,7 @@ RSpec.describe PostsController, type: :request do
 
     context 'ログインユーザーが他者の投稿を更新するとき' do
       let!(:other_user) { create(:other_user) }
-      let!(:other_user_post) { create(:post, user_id: other_user.id) }
+      let!(:other_user_post) { create(:post, user: other_user) }
 
       it '投稿は更新されず、投稿一覧画面にリダイレクトされる' do
         aggregate_failures do
@@ -233,7 +276,7 @@ RSpec.describe PostsController, type: :request do
     include_context 'userでログインする'
 
     context 'ログインユーザーが自身の投稿を削除するとき' do
-      let!(:user_post) { create(:post, user_id: user.id) }
+      let!(:user_post) { create(:post, user:) }
 
       it '投稿が削除される' do
         aggregate_failures do
@@ -249,7 +292,7 @@ RSpec.describe PostsController, type: :request do
 
     context 'ログインユーザーが他者の投稿を削除するとき' do
       let!(:other_user) { create(:other_user) }
-      let!(:other_user_post) { create(:post, user_id: other_user.id) }
+      let!(:other_user_post) { create(:post, user: other_user) }
 
       it '投稿は削除されず、投稿一覧画面にリダイレクトされる' do
         aggregate_failures do

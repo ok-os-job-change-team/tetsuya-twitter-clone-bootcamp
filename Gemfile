@@ -93,6 +93,9 @@ group :development do
 
   # https://github.com/rubocop/rubocop-rspec
   gem 'rubocop-rspec', require: false
+
+  # [https://github.com/zdennis/activerecord-import]
+  gem 'activerecord-import'
 end
 
 group :test do

@@ -1,4 +1,17 @@
 <% provide(:title, 'Home') %>
+
+<style>
+  nav.page-navigation {
+    max-width: 14rem;
+  }
+
+  ul.pagination {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+  }
+</style>
+
 <%= render 'shared/header' %>
 
 <h1>ポスト</h1>
@@ -29,4 +42,26 @@
       </li>
     <% end %>
   </ul>
+<% end %>
+
+<% if @total_pages > 1 %>
+  <nav class="page-navigation">
+    <ul class="pagination">
+      <% if @current_page > 1 %>
+        <li class="page-item">
+          <%= link_to '<', posts_path(page: @current_page - 1, query: @query), class: 'page-link' %>
+        </li>
+      <% end %>
+      <% @page_range.each do |page| %>
+        <li class="page-item <%= 'active' if page == @current_page %>">
+          <%= link_to page, posts_path(page: page, query: @query), class: 'page-link' %>
+        </li>
+      <% end %>
+      <% if @current_page < @total_pages %>
+        <li class="page-item">
+          <%= link_to '>', posts_path(page: @current_page + 1, query: @query), class: 'page-link' %>
+        </li>
+      <% end %>
+    </ul>
+  </nav>
 <% end %>

@@ -1,13 +1,18 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  POSTS_PER_PAGE = 10
+
   before_action :check_logged_in, only: %i[index show new create]
   before_action :authorize_post_edit, only: %i[edit update destroy]
 
   # GET /posts
   def index
+    @current_page = (params[:page] || 1).to_i
     @query = params[:query]
-    @posts = Post.search_by_content_or_title(@query)
+    @posts, total_count = Post.search_by_content_or_title(@query, @current_page)
+    @total_pages = (total_count / POSTS_PER_PAGE.to_f).ceil
+    @page_range = calculate_page_range(@current_page, @total_pages)
 
     flash.now[:notice] = "#{@query}に該当する結果はありません" if @query.present? && @posts.empty?
   end
@@ -63,6 +68,18 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def calculate_page_range(current_page, total_pages)
+    if total_pages <= 5
+      (1..total_pages).to_a
+    elsif current_page <= 3
+      (1..5).to_a
+    elsif current_page >= total_pages - 2
+      ((total_pages - 4)..total_pages).to_a
+    else
+      ((current_page - 2)..(current_page + 2)).to_a
+    end
+  end
 
   def post_params
     params.require(:post).permit(:title, :content).merge(user_id: current_user.id)
