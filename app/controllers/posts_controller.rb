@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  MAX_NUM_PAGES_DISPLAYED = Post::MAX_NUM_PAGES_DISPLAYED
+
   before_action :check_logged_in, only: %i[index show new create]
   before_action :authorize_post_edit, only: %i[edit update destroy]
 
@@ -8,9 +10,8 @@ class PostsController < ApplicationController
   def index
     @current_page = (params[:page] || 1).to_i
     @query = params[:query]
-    @posts, total_count = Post.search_by_content_or_title(@query, @current_page)
-    @total_pages = (total_count / Post::POSTS_PER_PAGE.to_f).ceil
-    @page_range = calculate_page_range(@current_page, @total_pages)
+    @posts, @upcoming_page_count = Post.search_by_content_or_title(@query, @current_page)
+    @page_range = calculate_page_range(@current_page, @upcoming_page_count)
 
     flash.now[:notice] = "#{@query}に該当する結果はありません" if @query.present? && @posts.empty?
   end
@@ -67,16 +68,16 @@ class PostsController < ApplicationController
 
   private
 
-  def calculate_page_range(current_page, total_pages)
-    if total_pages <= 5
-      (1..total_pages).to_a
-    elsif current_page <= 3
-      (1..5).to_a
-    elsif current_page >= total_pages - 2
-      ((total_pages - 4)..total_pages).to_a
-    else
-      ((current_page - 2)..(current_page + 2)).to_a
-    end
+  def calculate_page_range(current_page, upcoming_page_count)
+    displayed_last_page_num = current_page + upcoming_page_count - 1
+    displayed_start_page_num = if displayed_last_page_num <= MAX_NUM_PAGES_DISPLAYED
+                                 1
+                               elsif upcoming_page_count < (MAX_NUM_PAGES_DISPLAYED + 1) / 2
+                                 displayed_last_page_num - MAX_NUM_PAGES_DISPLAYED + 1
+                               else
+                                 current_page - (MAX_NUM_PAGES_DISPLAYED - 1) / 2
+                               end
+    (displayed_start_page_num..displayed_last_page_num).to_a
   end
 
   def post_params

@@ -44,7 +44,7 @@
   </ul>
 <% end %>
 
-<% if @total_pages > 1 %>
+<% if @upcoming_page_count > 1 || @current_page > 1 %>
   <nav class="page-navigation">
     <ul class="pagination">
       <% if @current_page > 1 %>
@@ -57,7 +57,7 @@
           <%= link_to page, posts_path(page: page, query: @query), class: 'page-link' %>
         </li>
       <% end %>
-      <% if @current_page < @total_pages %>
+      <% if @upcoming_page_count > 1 %>
         <li class="page-item">
           <%= link_to '>', posts_path(page: @current_page + 1, query: @query), class: 'page-link' %>
         </li>
