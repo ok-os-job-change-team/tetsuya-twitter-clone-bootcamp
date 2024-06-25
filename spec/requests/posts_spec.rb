@@ -62,40 +62,40 @@ RSpec.describe PostsController, type: :request do
     end
 
     context '30件のポストについて' do
-      let!(:posts) { create_list(:post, 30, user:) } # 30件の投稿を作成
+      let!(:posts) { create_list(:post, 60, user:) } # 60件の投稿を作成
 
       context 'ログイン状態でポスト一覧にアクセスするとき' do
         include_context 'userでログインする'
 
         context '1ページ目にアクセスするとき' do
-          it '1~10番目のポストが表示される' do
+          it '1~20番目のポストが表示される' do
             aggregate_failures do
               get posts_path, params: { page: 1 }
               expect(response).to have_http_status(:success)
               expect(response.body).to include posts[0].content
-              expect(response.body).to include posts[9].content
-            end
-          end
-        end
-
-        context '2ページ目にアクセスするとき' do
-          it '11~20番目のポストが表示される' do
-            aggregate_failures do
-              get posts_path, params: { page: 2 }
-              expect(response).to have_http_status(:success)
-              expect(response.body).to include posts[10].content
               expect(response.body).to include posts[19].content
             end
           end
         end
 
+        context '2ページ目にアクセスするとき' do
+          it '21~40番目のポストが表示される' do
+            aggregate_failures do
+              get posts_path, params: { page: 2 }
+              expect(response).to have_http_status(:success)
+              expect(response.body).to include posts[20].content
+              expect(response.body).to include posts[39].content
+            end
+          end
+        end
+
         context '3ページ目にアクセスするとき' do
-          it '21~30番目のポストが表示される' do
+          it '41~60番目のポストが表示される' do
             aggregate_failures do
               get posts_path, params: { page: 3 }
               expect(response).to have_http_status(:success)
-              expect(response.body).to include posts[20].content
-              expect(response.body).to include posts[29].content
+              expect(response.body).to include posts[40].content
+              expect(response.body).to include posts[59].content
             end
           end
         end

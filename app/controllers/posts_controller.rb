@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  POSTS_PER_PAGE = 10
-
   before_action :check_logged_in, only: %i[index show new create]
   before_action :authorize_post_edit, only: %i[edit update destroy]
 
@@ -11,7 +9,7 @@ class PostsController < ApplicationController
     @current_page = (params[:page] || 1).to_i
     @query = params[:query]
     @posts, total_count = Post.search_by_content_or_title(@query, @current_page)
-    @total_pages = (total_count / POSTS_PER_PAGE.to_f).ceil
+    @total_pages = (total_count / Post::POSTS_PER_PAGE.to_f).ceil
     @page_range = calculate_page_range(@current_page, @total_pages)
 
     flash.now[:notice] = "#{@query}に該当する結果はありません" if @query.present? && @posts.empty?

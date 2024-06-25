@@ -5,4 +5,4 @@ SELECT * FROM (
   SELECT `posts`.* FROM `posts`
   WHERE title LIKE :query
 ) AS combined_results
-LIMIT :limit OFFSET :offset
+LIMIT %<limit>d OFFSET %<offset>d

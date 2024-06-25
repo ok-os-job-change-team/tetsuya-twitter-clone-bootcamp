@@ -10,6 +10,10 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 USERS_COUNT = 2
+POST_BATCH_SIZE = 1_000
+TOTAL_POST_COUNT = 10_000
+
+Faker::Config.random = Random.new(1)
 
 users = []
 USERS_COUNT.times do |i|
@@ -23,12 +27,17 @@ end
 User.import users
 
 posts = []
-200.times do |i|
+TOTAL_POST_COUNT.times do |i|
   user_id = i % USERS_COUNT + 1
   title = Faker::Lorem.sentence
   content = Faker::Lorem.paragraph
 
   posts << Post.new(user_id:, title:, content:)
+
+  if posts.size >= POST_BATCH_SIZE
+    Post.import(posts)
+    posts.clear
+  end
 end
 
-Post.import posts
+Post.import(posts) unless posts.empty?
