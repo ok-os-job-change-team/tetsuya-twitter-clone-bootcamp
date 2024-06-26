@@ -27,9 +27,10 @@ class Post < ApplicationRecord
 
     def search_all_posts(offset, current_page)
       num_pages_on_standby = calculate_num_pages_on_standby(current_page)
+      limit = POSTS_PER_PAGE * num_pages_on_standby
 
       # 現在ページから、最大表示ページ数に達する数の投稿を取得する
-      posts_on_standby = offset(offset).limit(POSTS_PER_PAGE * num_pages_on_standby)
+      posts_on_standby = offset(offset).limit(limit)
       posts_to_display = posts_on_standby[0...POSTS_PER_PAGE]
 
       # 実際に得られた投稿数から、表示する残りページ数を計算する
@@ -40,11 +41,11 @@ class Post < ApplicationRecord
 
     def search_with_query(query, offset, current_page)
       num_pages_on_standby = calculate_num_pages_on_standby(current_page)
+      limit = POSTS_PER_PAGE * num_pages_on_standby
 
       # 最大表示ページ数に達する数の投稿を取得するためのSQLをセットする
       sanitized_query = sanitize_sql_like(query)
-      query_with_pagination = format(load_sql('query_with_pagination.sql'),
-                                     limit: POSTS_PER_PAGE * num_pages_on_standby, offset:)
+      query_with_pagination = set_query_with_pagination(limit, offset)
 
       posts_on_standby = find_by_sql([query_with_pagination, { query: "#{sanitized_query}%" }])
       posts_to_display = posts_on_standby[0...POSTS_PER_PAGE]
@@ -64,9 +65,17 @@ class Post < ApplicationRecord
       end
     end
 
-    def load_sql(filename)
-      filepath = Rails.root.join('app', 'sql', filename)
-      File.read(filepath)
+    def set_query_with_pagination(limit, offset)
+      <<-SQL
+        SELECT * FROM (
+          SELECT `posts`.* FROM `posts`
+          WHERE content LIKE :query
+          UNION ALL
+          SELECT `posts`.* FROM `posts`
+          WHERE title LIKE :query
+        ) AS combined_results
+        LIMIT #{limit} OFFSET #{offset}
+      SQL
     end
   end
 
