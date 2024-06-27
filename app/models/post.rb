@@ -26,11 +26,10 @@ class Post < ApplicationRecord
     private
 
     def search_all_posts(offset, current_page)
-      num_pages_on_standby = calculate_num_pages_on_standby(current_page)
-      limit = POSTS_PER_PAGE * num_pages_on_standby
+      limit = POSTS_PER_PAGE * calculate_num_pages_on_standby(current_page)
 
       # 現在ページから、最大表示ページ数に達する数の投稿を取得する
-      posts_on_standby = offset(offset).limit(limit)
+      posts_on_standby = offset(offset).limit(limit).eager_load(:user)
       posts_to_display = posts_on_standby[0...POSTS_PER_PAGE]
 
       # 実際に得られた投稿数から、表示する残りページ数を計算する
@@ -40,14 +39,13 @@ class Post < ApplicationRecord
     end
 
     def search_with_query(query, offset, current_page)
-      num_pages_on_standby = calculate_num_pages_on_standby(current_page)
-      limit = POSTS_PER_PAGE * num_pages_on_standby
+      limit = POSTS_PER_PAGE * calculate_num_pages_on_standby(current_page)
 
       # 最大表示ページ数に達する数の投稿を取得するためのSQLをセットする
       sanitized_query = sanitize_sql_like(query)
-      query_with_pagination = set_query_with_pagination(limit, offset)
-
-      posts_on_standby = find_by_sql([query_with_pagination, { query: "#{sanitized_query}%" }])
+      posts_on_standby = \
+        find_by_sql([set_query_with_pagination(limit, offset), { query: "#{sanitized_query}%" }])
+      ActiveRecord::Associations::Preloader.new(records: posts_on_standby, associations: :user).call
       posts_to_display = posts_on_standby[0...POSTS_PER_PAGE]
 
       # 実際に得られた投稿数から、表示する残りページ数を計算する
