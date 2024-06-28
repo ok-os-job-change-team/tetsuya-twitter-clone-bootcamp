@@ -9,13 +9,35 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+USERS_COUNT = 2
+POST_BATCH_SIZE = 1_000
+TOTAL_POST_COUNT = 10_000
 
-User.create(email: 'user1@example.com', password: 'p@ssw0rd', password_confirmation: 'p@ssw0rd')
-User.create(email: 'user2@example.com', password: 'hogehoge', password_confirmation: 'hogehoge')
+Faker::Config.random = Random.new(1)
 
-Post.create(user_id: 1, title: 'タイトル1-1', content: '本文1-1')
-Post.create(user_id: 1, title: 'タイトル1-2', content: '本文1-2')
-Post.create(user_id: 1, title: 'タイトル1-3', content: '本文1-3')
-Post.create(user_id: 2, title: 'タイトル2-1', content: '本文2-1')
-Post.create(user_id: 2, title: 'タイトル2-2', content: '本文2-2')
-Post.create(user_id: 2, title: 'タイトル2-3', content: '本文2-3')
+users = []
+USERS_COUNT.times do |i|
+  email = "user#{i + 1}@example.com"
+  password = 'p@ssw0rd'
+  password_confirmation = 'p@ssw0rd'
+
+  users << User.new(email:, password:, password_confirmation:)
+end
+
+User.import users
+
+posts = []
+TOTAL_POST_COUNT.times do |i|
+  user_id = i % USERS_COUNT + 1
+  title = Faker::Lorem.sentence
+  content = Faker::Lorem.paragraph
+
+  posts << Post.new(user_id:, title:, content:)
+
+  if posts.size >= POST_BATCH_SIZE
+    Post.import(posts)
+    posts.clear
+  end
+end
+
+Post.import(posts) unless posts.empty?

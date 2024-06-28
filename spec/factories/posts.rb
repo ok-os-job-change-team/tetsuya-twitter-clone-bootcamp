@@ -2,7 +2,8 @@
 
 FactoryBot.define do
   factory :post do
-    title { 'サンプルタイトル' }
-    content { 'サンプル記事' }
+    association :user
+    title { Faker::Lorem.sentence }
+    content { Faker::Lorem.paragraph }
   end
 end

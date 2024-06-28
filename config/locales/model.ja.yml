@@ -1,0 +1,21 @@
+ja:
+  activerecord:
+    models:
+      user: ユーザー
+      post: ポスト
+
+    attributes:
+      user:
+        id: ユーザーID
+        email: メールアドレス
+        password: パスワード
+
+      post:
+        id: ポストID
+        user_id: ユーザーID
+        title: タイトル
+        content: 本文
+
+  attributes:
+    created_at: 作成日
+    updated_at: 更新日
