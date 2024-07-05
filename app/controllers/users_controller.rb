@@ -18,6 +18,7 @@ class UsersController < ApplicationController
   # GET /users/new
   def new
     @user = User.new
+    render layout: 'login_layout'
   end
 
   # POST /users
@@ -28,7 +29,7 @@ class UsersController < ApplicationController
       redirect_to @user, notice: 'アカウントの作成に成功しました'
     else
       flash.now[:alert] = 'アカウントの作成に失敗しました'
-      render :new, status: :unprocessable_entity
+      render :new, layout: 'login_layout', status: :unprocessable_entity
     end
   end
 

@@ -1,34 +1,10 @@
 <% provide(:title, '投稿編集') %>
-<%= render 'shared/header' %>
+<% provide(:submit_word, '編集完了') %>
+<% provide(:back_path, post_path(@post)) %>
 
-<h1>投稿編集</h1>
+<div class="contents-wrapper">
+  <h1>投稿編集</h1>
 
-<%= render 'layouts/flash' %>
-
-<%= form_with(model: @post, local: true) do |form| %>
-  <div>
-    <ul>
-    <% @post.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  </div>
-
-  <div class="field">
-    <%= form.label 'タイトル' %>
-    <br>
-    <%= form.text_field :title, autofocus: true %>
-  </div>
-
-  <div class="field">
-    <%= form.label '本文' %>
-    <br>
-    <%= form.text_field :content %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit '編集を確定する' %>
-  </div>
-<% end %>
-
-<%= link_to '戻る', post_path(@post) %>
+  <%= render 'layouts/flash' %>
+  <%= render 'posts/form' %>
+</div>

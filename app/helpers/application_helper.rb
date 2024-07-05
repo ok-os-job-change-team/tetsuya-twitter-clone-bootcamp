@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  BASE_TITLE = 'だべったー'
+  BASE_TITLE = 'さみだれ'
   def full_title(page_title)
     if page_title.blank?
       BASE_TITLE

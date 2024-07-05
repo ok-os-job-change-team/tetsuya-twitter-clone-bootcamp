@@ -1,67 +1,69 @@
 <% provide(:title, 'Home') %>
-
 <style>
-  nav.page-navigation {
-    max-width: 14rem;
-  }
-
-  ul.pagination {
-    list-style: none;
+  div.search-box {
     display: flex;
-    justify-content: space-around;
   }
 </style>
 
-<%= render 'shared/header' %>
+<div class="contents-wrapper">
+  <h1>ポスト</h1>
 
-<h1>ポスト</h1>
+  <%= render 'layouts/flash' %>
 
-<%= render 'layouts/flash' %>
-
-<%= form_with url: posts_path, method: :get, local: true do |form| %>
-  <div>
-    <%= form.label :query, '検索' %>
-    <%= form.text_field :query %>
-    <%= form.submit '検索' %>
-  </div>
-<% end %>
-<% if @posts.present? %>
-  <% if @query.blank? %>
-    <h2>全てのポスト</h2>
-  <% else %>
-    <h2><%= @query %> の検索結果</h2>
-  <% end %>
-  <ul>
-    <% @posts.each do |post| %>
-      <li>
-        <table>
-          <tr><td><%= link_to post.user.email, user_path(post.user) %></td></tr>
-          <tr><td><%= link_to post.title, post %></td></tr>
-          <tr><td><%= post.content %></td></tr>
-        </table>
-      </li>
+  <div class="field has-addons">
+    <%= form_with url: posts_path, method: :get, local: true do |form| %>
+      <div class="search-box">
+        <span class="control">
+          <%= form.text_field :query, class: 'input is-rounded', placeholder: 'キーワード', size: '140' %>
+        </span>
+        <span class="control">
+          <%= form.submit '検索', class: 'button is-primary has-text-white is-rounded' %>
+        </span>
+      </div>
     <% end %>
-  </ul>
-<% end %>
+  </div>
 
-<% if @upcoming_page_count > 1 || @current_page > 1 %>
-  <nav class="page-navigation">
-    <ul class="pagination">
-      <% if @current_page > 1 %>
-        <li class="page-item">
-          <%= link_to '<', posts_path(page: @current_page - 1, query: @query), class: 'page-link' %>
-        </li>
+  <% if @posts.present? %>
+    <% if @query.blank? %>
+      <h2>すべてのポスト</h2>
+    <% else %>
+      <h2><%= @query %> の検索結果</h2>
+    <% end %>
+    <div class="posts">
+      <% @posts.each do |post| %>
+        <article class="media">
+          <div class="media-content">
+            <div class="post-wrapper">
+              <p><%= link_to post.user.email, user_path(post.user) %></p>
+              <p><%= link_to post.title, post %></p>
+              <div>
+                <%= simple_format(post.content) %>
+              </div>
+          </div>
+        </article>
       <% end %>
-      <% @page_range.each do |page| %>
-        <li class="page-item <%= 'active' if page == @current_page %>">
-          <%= link_to page, posts_path(page: page, query: @query), class: 'page-link' %>
-        </li>
-      <% end %>
-      <% if @upcoming_page_count > 1 %>
-        <li class="page-item">
-          <%= link_to '>', posts_path(page: @current_page + 1, query: @query), class: 'page-link' %>
-        </li>
-      <% end %>
-    </ul>
-  </nav>
-<% end %>
+    </div>
+  <% end %>
+
+  <% if @upcoming_page_count > 1 || @current_page > 1 %>
+    <nav class="pagination" role="navigation" aria-label="pagination">
+      <ul class="pagination-list">
+        <% if @current_page > 1 %>
+          <li>
+            <%= link_to '<', posts_path(page: @current_page - 1, query: @query), class: 'pagination-previous' %>
+          </li>
+        <% end %>
+        <% @page_range.each do |page| %>
+          <li style="margin: 0;">
+            <%= link_to page, posts_path(page: page, query: @query), class: 'pagination-link' %>
+          </li>
+        <% end %>
+        <% if @upcoming_page_count > 1 %>
+          <li style="margin: 0;">
+            <%= link_to '>', posts_path(page: @current_page + 1, query: @query), class: 'pagination-next' %>
+          </li>
+        <% end %>
+      </ul>
+    </nav>
+  <% end %>
+</div>

@@ -1,22 +1,76 @@
 <% provide(:title, 'ログイン') %>
 
-<h1>ログイン</h1>
+<style>
+  div.session-form-wrapper {
+    margin: 0 auto;
+  }
 
-<%= render 'layouts/flash' %>
+  form {
+    width: 100%;
+  }
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_with(url: login_path, local: true, scope: :session) do |f| %>
+  .field-body {
+    display: grid;
+    margin-right: 20%;
+  }
+</style>
 
-      <%= f.label :email %>
-      <%= f.email_field :email, class: 'form-control' %>
+<div class="contents-wrapper">
+  <h1>ログイン</h1>
 
-      <%= f.label :password %>
-      <%= f.password_field :password, class: 'form-control' %>
+  <%= render 'layouts/flash' %>
 
-      <%= f.submit 'ログイン', class: 'btn btn-primary' %>
+  <div class="session-form-wrapper">
+    <%= form_with(url: login_path, local: true, scope: :session) do |form| %>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <%= form.label 'メールアドレス', class: 'label' %>
+        </div>
+        <div class="field-body">
+          <div class="control">
+            <div class="field">
+              <p class="control">
+                <%= form.email_field :email, class: 'input is-rounded', placeholder: 'email@example.com' %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <%= form.label 'パスワード', class: 'label' %>
+        </div>
+        <div class="field-body">
+          <div class="control">
+            <div class="field">
+              <p class="control">
+                <%= form.password_field :password, class: 'input is-rounded' %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="field is-horizontal">
+        <div class="field-label"></div>
+        <div class="field-body">
+          <div class="control">
+            <%= form.submit 'ログイン', class: 'button is-primary has-text-white is-rounded is-fullwidth' %>
+          </div>
+        </div>
+      </div>
     <% end %>
 
-    <p>未登録ですか？ <%= link_to '新規登録', new_user_path %></p>
+    <div class="field is-horizontal">
+      <div class="field-label"></div>
+      <div class="field-body">
+        <div class="control">
+          <small>未登録ですか？</small>
+          <%= link_to '新規登録', new_user_path, class: 'button is-primary is-rounded is-outlined is-fullwidth' %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

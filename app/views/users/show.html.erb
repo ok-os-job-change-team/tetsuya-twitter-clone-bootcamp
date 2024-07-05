@@ -1,12 +1,72 @@
 <% provide(:title, 'User詳細') %>
-<%= render 'shared/header' %>
 
-<h1>User 詳細</h1>
+<style>
+  form {
+    width: 100%;
+  }
 
-<%= render 'layouts/flash' %>
+  .field-body {
+    display: block;
+    margin-right: 20%;
+  }
+</style>
 
-<p>id: <%= @user.id %></p>
-<p>Email: <%= @user.email %></p>
+<div class="contents-wrapper">
+  <h1>User 詳細</h1>
 
-<%= link_to 'ユーザー一覧', users_path %>
-<%= link_to 'ユーザー情報編集', edit_user_path(@user) %>
+  <%= render 'layouts/flash' %>
+
+  <div>
+    <%= form_with(model: @user, local: true) do |form| %>
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <%= form.label :id, class: 'label' %>
+        </div>
+        <div class="field-body">
+          <div class="control">
+            <div class="field">
+              <p class="control">
+                <%= form.text_field :id, class: 'input is-rounded', readonly: true %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label is-normal">
+          <%= form.label :email, class: 'label' %>
+        </div>
+        <div class="field-body">
+          <div class="control">
+            <div class="field">
+              <p class="control">
+                <%= form.email_field :email, class: 'input is-rounded', readonly: true %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <% if session[:user_id] == @user.id %>
+        <div class="field is-horizontal">
+          <div class="field-label"></div>
+          <div class="field-body">
+            <div class="control">
+              <%= link_to 'ユーザー情報編集', edit_user_path(@user), class: 'button is-primary has-text-white is-rounded is-fullwidth' %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+
+      <div class="field is-horizontal">
+        <div class="field-label"></div>
+        <div class="field-body">
+          <div class="control">
+            <%= link_to 'ユーザー一覧', users_path, class: 'button is-primary is-rounded is-outlined is-fullwidth' %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

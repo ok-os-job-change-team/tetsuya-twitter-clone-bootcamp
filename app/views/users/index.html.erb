@@ -1,22 +1,37 @@
 <% provide(:title, 'User一覧') %>
-<%= render 'shared/header' %>
 
-<h1>Users リスト</h1>
+<style>
+  table {
+    width: 100%;
+  }
+</style>
 
-<%= render 'layouts/flash' %>
+<div class="contents-wrapper">
+  <h1>Users リスト</h1>
 
-<table>
-  <tr>
-    <th>ID</th>
-    <th>E-mail</th>
-  </tr>
-  <% @users.each do |user| %>
-    <tr>
-      <td><%= user.id %></td>
-      <td><%= link_to user.email, user_path(user) %></td>
-      <td><%= button_to '削除', user, method: :delete %></td>
-    </tr>
-  <% end %>
-</table>
+  <%= render 'layouts/flash' %>
 
-<%= link_to '新規ユーザー', new_user_path %>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>E-mail</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <th><%= user.id %></th>
+          <td><%= link_to user.email, user_path(user) %></td>
+
+          <% if session[:user_id] == user.id %>
+            <td>
+              <%= link_to '削除', user_path(user), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'button is-danger has-text-white is-rounded' %>
+            </td>
+          <% end %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

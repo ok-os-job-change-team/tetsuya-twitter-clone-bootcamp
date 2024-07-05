@@ -1,9 +1,9 @@
 <% provide(:title, 'User情報編集') %>
-<%= render 'shared/header' %>
+<% provide(:back_path, user_path(@user)) %>
 
-<h1>ユーザー情報編集</h1>
+<div class="contents-wrapper">
+  <h1>ユーザー情報編集</h1>
 
-<%= render 'layouts/flash' %>
-<%= render 'form' %>
-
-<%= link_to '戻る', user_path(@user) %>
+  <%= render 'layouts/flash' %>
+  <%= render 'form' %>
+</div>

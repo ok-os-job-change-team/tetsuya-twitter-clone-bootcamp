@@ -12,11 +12,16 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+
     <style>
       @media screen and (max-width: 767px) {
         div.content {
           display: grid;
           margin: 2%;
+        }
+
+        div.side-spacer {
+          display: none;
         }
       }
 
@@ -24,6 +29,10 @@
         div.content {
           display: flex;
           justify-content: center;
+        }
+
+        div.side-spacer {
+          flex-basis: 25%;
         }
 
         div.contents-wrapper{
@@ -38,7 +47,7 @@
     <div class="container">
       <%= render 'shared/header' %>
       <div class="content">
-        <%= render 'shared/tab_menu' %>
+        <div class="side-spacer"></div>
         <%= yield %>
       </div>
     </div>

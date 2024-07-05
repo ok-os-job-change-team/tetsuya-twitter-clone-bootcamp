@@ -1,24 +1,47 @@
 <% provide(:title, 'ポスト詳細' + @post.title) %>
-<%= render 'shared/header' %>
 
-<%= render 'layouts/flash' %>
+<style>
+  .field.has-addons {
+    width: 100%;
+  }
 
-<table class="post">
-  <tr>
-    <th><%= @post.title %></th>
-  </tr>
-  <tr>
-    <td><%= link_to @post.user.email, user_path(@post.user) %></td>
-  </tr>
-  <tr>
-    <td><%= @post.content %></td>
-  </tr>
-</table>
+  div.control {
+    width: 50%;
+  }
+</style>
 
-<ul>
-  <li><%= link_to 'ポスト一覧', posts_path %></li>
-  <% if session[:user_id] == @post.user_id %>
-    <li><%= link_to 'ポスト編集', edit_post_path(@post.id) %></li>
-    <li><%= link_to 'ポスト削除', post_path(@post.id), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' } %></li>
-  <% end %>
-</ul>
+<div class="contents-wrapper">
+  <h1>ポスト詳細</h1>
+  <%= render 'layouts/flash' %>
+
+  <article class="media">
+    <div class="media-content">
+      <p>
+        <strong><%= link_to @post.user.email, user_path(@post.user) %></strong>
+      </p>
+      <p><%= @post.title %></p>
+      <p><%= simple_format(@post.content) %></p>
+      <p>
+        <small>投稿日時：<%= @post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></small>
+        <br>
+        <small>更新日時：<%= @post.updated_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></small>
+      </p>
+    </div>
+  </article>
+
+  <div class="field has-addons">
+    <% if session[:user_id] == @post.user_id %>
+      <div class="control">
+        <%= link_to 'ポスト編集', edit_post_path(@post.id), class: 'button is-primary has-text-white is-rounded is-fullwidth' %>
+      </div>
+
+      <div class="control">
+        <%= link_to 'ポスト削除', post_path(@post.id), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'button is-danger has-text-white is-rounded is-fullwidth' %>
+      </div>
+    <% end %>
+  </div>
+
+  <div>
+    <%= link_to 'ポスト一覧', posts_path, class: 'button is-primary is-outlined is-rounded is-fullwidth' %>
+  </div>
+</div>
