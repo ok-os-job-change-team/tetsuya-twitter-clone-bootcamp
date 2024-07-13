@@ -1,0 +1,12 @@
+<% provide(:title, 'フォロー一覧') %>
+
+<div class="contents-wrapper">
+  <h1>フォロー中</h1>
+  <%= render 'layouts/flash' %>
+
+  <% if @followees.exists? %>
+    <%= render 'users/list', { users: @followees } %>
+  <% else %>
+    <p>フォロー中のユーザーはいません</p>
+  <% end %>
+</div>
