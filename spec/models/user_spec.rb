@@ -39,9 +39,62 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe 'Associations' do
+  describe '#associations' do
     it { should have_many(:posts).dependent(:destroy) }
     it { should have_many(:favorites).dependent(:destroy) }
+    it { should have_many(:active_relationships).dependent(:destroy) }
+    it { should have_many(:passive_relationships).dependent(:destroy) }
+    it { should have_many(:followees).through(:active_relationships).source(:followee) }
+    it { should have_many(:followers).through(:passive_relationships).source(:follower) }
+  end
+
+  describe '#methods' do
+    let!(:user) { create(:user) }
+    let!(:other_user) { create(:other_user) }
+
+    describe '#follow' do
+      it '他のユーザーをフォローする' do
+        aggregate_failures do
+          expect do
+            user.follow(other_user)
+          end.to change(user.followees, :count).by(1)
+          expect(user.following?(other_user)).to be true
+        end
+      end
+    end
+
+    describe '#unfollow' do
+      before do
+        user.follow(other_user)
+      end
+
+      it '他のユーザーのフォローを解除する' do
+        aggregate_failures do
+          expect do
+            user.unfollow(other_user)
+          end.to change(user.followees, :count).by(-1)
+          expect(user.following?(other_user)).to be false
+        end
+      end
+    end
+
+    describe '#following' do
+      context '他のユーザーをフォローしているとき' do
+        before do
+          user.follow(other_user)
+        end
+
+        it 'trueが返る' do
+          expect(user.following?(other_user)).to be true
+        end
+      end
+
+      context '他のユーザーをフォローしていないとき' do
+        it 'falseが返る' do
+          expect(user.following?(other_user)).to be false
+        end
+      end
+    end
   end
 
   describe 'Methods' do

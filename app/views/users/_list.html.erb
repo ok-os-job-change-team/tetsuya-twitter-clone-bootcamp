@@ -1,0 +1,35 @@
+<style>
+  table {
+    width: 100%;
+  }
+</style>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>E-mail</th>
+      <th>フォロー</th>
+      <th>フォロワー</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <th><%= user.id %></th>
+        <td><%= link_to user.email, user_path(user) %></td>
+        <td><%= link_to user.followees.count, user_followees_path(user) %></td>
+        <td><%= link_to user.followers.count, user_followers_path(user) %></td>
+
+        <% if session[:user_id] == user.id %>
+          <td>
+            <%= link_to '削除', user_path(user), data: { turbo_method: :delete, turbo_confirm: '本当に削除しますか？' }, class: 'button is-danger has-text-white is-rounded is-fullwidth' %>
+          </td>
+        <% else %>
+          <td><%= render 'relationships/btn', user: user %>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

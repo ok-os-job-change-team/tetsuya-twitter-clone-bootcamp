@@ -3,3 +3,4 @@
 require 'user.schema'
 require 'post.schema'
 require 'favorite.schema'
+require 'relationship.schema'

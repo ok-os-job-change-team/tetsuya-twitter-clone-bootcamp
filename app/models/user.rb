@@ -18,4 +18,23 @@ class User < ApplicationRecord
   def favorited?(post_id)
     favorites.indexed_favorites_by_post_id[post_id].present?
   end
+
+  has_many :active_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy,
+                                  inverse_of: :follower
+  has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'followee_id', dependent: :destroy,
+                                   inverse_of: :followee
+  has_many :followees, through: :active_relationships, source: :followee
+  has_many :followers, through: :passive_relationships, source: :follower
+
+  def follow(user)
+    active_relationships.create(followee_id: user.id)
+  end
+
+  def unfollow(user)
+    active_relationships.find_by(followee_id: user.id).destroy
+  end
+
+  def following?(user)
+    followees.include?(user)
+  end
 end

@@ -3,7 +3,7 @@
 RSpec.describe Post, type: :model do
   let!(:user) { create(:user) }
 
-  describe '#validation' do
+  describe 'validation' do
     context '属性が全て有効な値であるとき' do
       let!(:post) { build(:post, user:) }
 
@@ -63,7 +63,7 @@ RSpec.describe Post, type: :model do
     end
   end
 
-  describe 'Association' do
+  describe 'Associations' do
     it { should belong_to(:user) }
     it { should have_many(:favorites).dependent(:destroy) }
   end
