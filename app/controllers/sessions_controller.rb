@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 class SessionsController < ApplicationController
-  def new; end
+  def new
+    render layout: 'login_layout'
+  end
 
   def create
     user = User.find_by(email: session_params[:email])
@@ -26,6 +28,6 @@ class SessionsController < ApplicationController
 
   def handle_invalid_login
     flash.now[:alert] = 'メールアドレスまたはパスワードが無効です'
-    render 'new', status: :unauthorized
+    render 'new', layout: 'login_layout', status: :unauthorized
   end
 end

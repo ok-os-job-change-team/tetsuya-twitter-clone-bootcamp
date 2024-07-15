@@ -1,0 +1,54 @@
+<style>
+  div.post-form-wrapper {
+    width: 80%;
+    margin: 0 auto;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  #post_title {
+    min-height: 1rem;
+  }
+
+  .textarea {
+    width: 100%;
+    margin: 0;
+    resize: none;
+  }
+</style>
+
+<div class="post-form-wrapper">
+  <div class="field is-grouped">
+    <%= form_with(model: @post, local: true) do |form| %>
+      <div>
+        <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+
+      <div class="field">
+        <label class="label"><%= form.label 'タイトル' %></label>
+        <span class="title-box">
+          <%= form.text_field :title, autofocus: true, class: 'textarea is-rounded', placeholder: 'タイトル', size: '30', maxlength: '30' %>
+        </span>
+      </div>
+
+      <div class="field">
+        <label class="label"><%= form.label '本文' %></label>
+        <%= form.text_area :content, class: 'content-box textarea is-rounded', placeholder: '本文', size: '30x10', maxlength: '140' %>
+      </div>
+
+      <div class="field">
+        <%= form.submit yield(:submit_word), class: 'button is-primary has-text-white is-rounded is-fullwidth' %>
+      </div>
+
+      <div class="field">
+        <%= link_to 'キャンセル', yield(:back_path), class: 'button is-primary is-rounded is-outlined is-fullwidth' %>
+      </div>
+    <% end %>
+  </div>
+</div>
