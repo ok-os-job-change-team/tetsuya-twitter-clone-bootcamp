@@ -1,10 +1,8 @@
 <% provide(:title, '新規ポスト') %>
-<% provide(:submit_word, '投稿する') %>
-<% provide(:back_path, posts_path) %>
 
 <div class="contents-wrapper">
   <h1>新規ポスト</h1>
 
   <%= render 'layouts/flash' %>
-  <%= render 'posts/form' %>
+  <%= render 'posts/form', { submit_word: '投稿する', back_path: posts_path } %>
 </div>

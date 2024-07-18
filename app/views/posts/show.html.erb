@@ -27,24 +27,7 @@
         <small>更新日時：<%= @post.updated_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></small>
       </p>
       <div>
-        <span>
-          <% if current_user.favorited?(@post) %>
-            <%= link_to post_favorite_path(@post, current_user.favorites.find_by(post: @post)), data: { turbo_method: :delete } do %>
-              <span class="material-icons has-text-danger">
-                favorite
-              </span>
-            <% end %>
-          <% else %>
-            <%= link_to post_favorites_path(@post), data: { turbo_method: :post } do %>
-              <span class="material-icons has-text-grey">
-                favorite_border
-              </span>
-            <% end %>
-          <% end %>
-          <span>
-            <%= @post.favorites.count %>like
-          </span>
-        </span>
+        <%= render 'favorites/btn', { post: @post } %>
       </div>
     </div>
   </article>

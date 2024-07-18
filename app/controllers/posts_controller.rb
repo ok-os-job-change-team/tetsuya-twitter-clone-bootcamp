@@ -11,6 +11,8 @@ class PostsController < ApplicationController
     @current_page = (params[:page] || 1).to_i
     @query = params[:query]
     @posts, @upcoming_page_count = Post.search_by_content_or_title(@query, @current_page)
+    @favorite_counts = fetch_favorite_counts(@posts)
+    @favorites = fetch_favorites(@posts)
     @page_range = calculate_page_range(@current_page, @upcoming_page_count)
 
     flash.now[:notice] = "#{@query}に該当する結果はありません" if @query.present? && @posts.empty?
@@ -20,6 +22,8 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @user = @post.user
+    @favorite_counts = Favorite.where(post_id: @post.id).group(:post_id).count
+    @favorites = current_user.favorites.where(post_id: @post.id).index_by(&:post_id)
   end
 
   # GET /posts/new
@@ -67,6 +71,14 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def fetch_favorite_counts(posts)
+    Favorite.where(post_id: posts.pluck(:id)).group(:post_id).count
+  end
+
+  def fetch_favorites(posts)
+    current_user.favorites.where(post_id: posts.pluck(:id)).index_by(&:post_id)
+  end
 
   def calculate_page_range(current_page, upcoming_page_count)
     displayed_last_page_num = current_page + upcoming_page_count - 1

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe User, type: :model do
-  describe '#validation' do
+  describe 'Validation' do
     context '属性が全て有効な値であるとき' do
       let!(:user) { build(:user) }
 
@@ -42,5 +42,33 @@ RSpec.describe User, type: :model do
   describe 'Associations' do
     it { should have_many(:posts).dependent(:destroy) }
     it { should have_many(:favorites).dependent(:destroy) }
+  end
+
+  describe 'Methods' do
+    let!(:user) { create(:user) }
+    let!(:post1) { create(:post) }
+    let!(:post2) { create(:post) }
+    let!(:favorite1) { create(:favorite, user:, post: post1) }
+
+    describe '#favorited?' do
+      context 'ユーザーがポストをお気に入り登録しているとき' do
+        it 'trueを返す' do
+          expect(user.favorited?(post1.id)).to be_truthy
+        end
+      end
+
+      context 'ユーザーがポストをお気に入り登録していないとき' do
+        it 'falseを返す' do
+          expect(user.favorited?(post2.id)).to be_falsey
+        end
+      end
+    end
+
+    describe 'UserFavoriteExtension#indexed_favorites_by_post_id' do
+      it 'インデックスが作成される' do
+        indexed_favorites = user.favorites.indexed_favorites_by_post_id
+        expect(indexed_favorites[post1.id]).to eq(favorite1)
+      end
+    end
   end
 end

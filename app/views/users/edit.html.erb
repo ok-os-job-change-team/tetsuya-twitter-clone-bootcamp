@@ -1,9 +1,8 @@
 <% provide(:title, 'User情報編集') %>
-<% provide(:back_path, user_path(@user)) %>
 
 <div class="contents-wrapper">
   <h1>ユーザー情報編集</h1>
 
   <%= render 'layouts/flash' %>
-  <%= render 'form' %>
+  <%= render 'form', { back_path: user_path(@user) } %>
 </div>

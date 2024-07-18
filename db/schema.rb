@@ -20,7 +20,7 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
-  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "記事", force: :cascade do |t|
+  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "投稿", force: :cascade do |t|
     t.bigint "user_id", null: false, comment: "投稿者ID"
     t.string "title", default: "無題", null: false, comment: "タイトル"
     t.string "content", null: false, comment: "投稿本文"
@@ -28,7 +28,7 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.datetime "updated_at", null: false
     t.index ["content"], name: "index_posts_on_content"
     t.index ["title"], name: "index_posts_on_title"
-    t.index ["user_id"], name: "fk_rails_5b5ddfd518"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "ユーザー", force: :cascade do |t|

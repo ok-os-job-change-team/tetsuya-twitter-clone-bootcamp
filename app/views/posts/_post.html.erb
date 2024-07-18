@@ -1,0 +1,31 @@
+<article class="media">
+  <div class="media-content">
+    <div class="post-wrapper">
+      <p><%= link_to post.user.email, user_path(post.user) %></p>
+      <p><%= link_to post.title, post %></p>
+      <div>
+        <%= simple_format(post.content) %>
+      </div>
+      <div>
+        <span>
+          <% if current_user.favorited?(post.id) %>
+            <%= link_to post_favorite_path(post, @favorites[post.id]), data: { turbo_method: :delete } do %>
+              <span class="material-icons has-text-danger">
+                favorite
+              </span>
+            <% end %>
+          <% else %>
+            <%= link_to post_favorites_path(post), data: { turbo_method: :post } do %>
+              <span class="material-icons has-text-grey">
+                favorite_border
+              </span>
+            <% end %>
+          <% end %>
+          <span>
+            <%= @favorite_counts[post.id] || 0 %>like
+          </span>
+        </span>
+      </div>
+    </div>
+  </div>
+</article>
