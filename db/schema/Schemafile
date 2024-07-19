@@ -2,3 +2,4 @@
 
 require 'user.schema'
 require 'post.schema'
+require 'favorite.schema'

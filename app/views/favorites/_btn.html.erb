@@ -1,0 +1,18 @@
+<span>
+  <% if current_user.favorited?(post.id) %>
+    <%= link_to post_favorite_path(post, favorite), data: { turbo_method: :delete } do %>
+      <span class="material-icons has-text-danger">
+        favorite
+      </span>
+    <% end %>
+  <% else %>
+    <%= link_to post_favorites_path(post), data: { turbo_method: :post } do %>
+      <span class="material-icons has-text-grey">
+        favorite_border
+      </span>
+    <% end %>
+  <% end %>
+  <span>
+    <%= favorite_count || 0 %>like
+  </span>
+</span>

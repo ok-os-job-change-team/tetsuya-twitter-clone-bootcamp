@@ -5,6 +5,8 @@ class Post < ApplicationRecord
   MAX_NUM_PAGES_DISPLAYED = 5
 
   belongs_to :user
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_by_users, through: :favorites, source: :user
 
   before_validation :set_default_values
 

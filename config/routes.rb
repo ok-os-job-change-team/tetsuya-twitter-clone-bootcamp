@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  get 'favorites/create'
+  get 'favorites/destroy'
   get 'sessions/new'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -15,7 +17,9 @@ Rails.application.routes.draw do
   delete 'logout', to: 'sessions#destroy'
 
   resources :users, only: %i[index show new create edit update destroy]
-  resources :posts, only: %i[index show new create edit update destroy]
+  resources :posts, only: %i[index show new create edit update destroy] do
+    resources :favorites, only: %i[create destroy]
+  end
 
   get '*not_found', to: 'application#routing_error'
   post '*not_found', to: 'application#routing_error'

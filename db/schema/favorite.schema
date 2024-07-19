@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+create_table :favorites, charset: 'utf8mb4', collation: 'utf8mb4_bin', comment: 'いいね', force: :cascade do |t|
+  t.references :post,    null: false, foreign_key: true, comment: 'ポストID'
+  t.references :user,    null: false, foreign_key: true, comment: '投稿者ID'
+  t.timestamps
+end

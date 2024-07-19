@@ -30,18 +30,7 @@
       <h2><%= @query %> の検索結果</h2>
     <% end %>
     <div class="posts">
-      <% @posts.each do |post| %>
-        <article class="media">
-          <div class="media-content">
-            <div class="post-wrapper">
-              <p><%= link_to post.user.email, user_path(post.user) %></p>
-              <p><%= link_to post.title, post %></p>
-              <div>
-                <%= simple_format(post.content) %>
-              </div>
-          </div>
-        </article>
-      <% end %>
+      <%= render @posts %>
     </div>
   <% end %>
 

@@ -26,6 +26,9 @@
         <br>
         <small>更新日時：<%= @post.updated_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></small>
       </p>
+      <div>
+        <%= render 'favorites/btn', { post: @post, favorite: @favorite, favorite_count: @favorite_count } %>
+      </div>
     </div>
   </article>
 

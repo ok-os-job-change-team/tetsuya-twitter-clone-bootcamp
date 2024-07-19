@@ -43,11 +43,11 @@
       </div>
 
       <div class="field">
-        <%= form.submit yield(:submit_word), class: 'button is-primary has-text-white is-rounded is-fullwidth' %>
+        <%= form.submit submit_word, class: 'button is-primary has-text-white is-rounded is-fullwidth' %>
       </div>
 
       <div class="field">
-        <%= link_to 'キャンセル', yield(:back_path), class: 'button is-primary is-rounded is-outlined is-fullwidth' %>
+        <%= link_to 'キャンセル', back_path, class: 'button is-primary is-rounded is-outlined is-fullwidth' %>
       </div>
     <% end %>
   </div>

@@ -1,9 +1,8 @@
 <% provide(:title, '新規登録') %>
-<% provide(:back_path, login_path) %>
 
 <div class="contents-wrapper">
   <h1>新規登録</h1>
 
   <%= render 'layouts/flash' %>
-  <%= render 'form' %>
+  <%= render 'form', { back_path: login_path } %>
 </div>
