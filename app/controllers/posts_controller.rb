@@ -22,8 +22,8 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @user = @post.user
-    @favorite_counts = Favorite.where(post_id: @post.id).group(:post_id).count
-    @favorites = current_user.favorites.where(post_id: @post.id).index_by(&:post_id)
+    @favorite_count = @post.favorites.count
+    @favorite = current_user.favorites.find_by(post_id: @post.id)
   end
 
   # GET /posts/new

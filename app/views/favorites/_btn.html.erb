@@ -1,6 +1,6 @@
 <span>
   <% if current_user.favorited?(post.id) %>
-    <%= link_to post_favorite_path(post, @favorites[post.id]), data: { turbo_method: :delete } do %>
+    <%= link_to post_favorite_path(post, favorite), data: { turbo_method: :delete } do %>
       <span class="material-icons has-text-danger">
         favorite
       </span>
@@ -13,6 +13,6 @@
     <% end %>
   <% end %>
   <span>
-    <%= @favorite_counts[post.id] || 0 %>like
+    <%= favorite_count || 0 %>like
   </span>
 </span>
