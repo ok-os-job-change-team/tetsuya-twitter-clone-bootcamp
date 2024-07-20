@@ -4,8 +4,8 @@
   <h1>フォロー中</h1>
   <%= render 'layouts/flash' %>
 
-  <% if @users.exists? %>
-    <%= render 'users/list', users: @users %>
+  <% if @followees.exists? %>
+    <%= render 'users/list', { users: @followees } %>
   <% else %>
     <p>フォロー中のユーザーはいません</p>
   <% end %>

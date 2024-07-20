@@ -31,13 +31,19 @@ class RelationshipsController < ApplicationController
 
   # GET /users/:user_id/followees
   def followees
-    user = User.find(params[:user_id])
-    @users = user.followees
+    @user = User.find(params[:user_id])
+    @followees = @user.followees
+    @followees_counts = Relationship.where(follower_id: @followees.pluck(:id)).group(:follower_id).count
+    @followers_counts = Relationship.where(followee_id: @followees.pluck(:id)).group(:followee_id).count
+    @followees_by_user = current_user.active_relationships.index_by(&:followee_id)
   end
 
   # GET /users/:user_id/followers
   def followers
-    user = User.find(params[:user_id])
-    @users = user.followers
+    @user = User.find(params[:user_id])
+    @followers = @user.followers
+    @followees_counts = Relationship.where(follower_id: @followers.pluck(:id)).group(:follower_id).count
+    @followers_counts = Relationship.where(followee_id: @followers.pluck(:id)).group(:followee_id).count
+    @followees_by_user = current_user.active_relationships.index_by(&:followee_id)
   end
 end

@@ -39,7 +39,7 @@ RSpec.describe User, type: :model do
     end
   end
 
-  describe '#associations' do
+  describe 'Associations' do
     it { should have_many(:posts).dependent(:destroy) }
     it { should have_many(:favorites).dependent(:destroy) }
     it { should have_many(:active_relationships).dependent(:destroy) }
@@ -48,79 +48,90 @@ RSpec.describe User, type: :model do
     it { should have_many(:followers).through(:passive_relationships).source(:follower) }
   end
 
-  describe '#methods' do
-    let!(:user) { create(:user) }
-    let!(:other_user) { create(:other_user) }
+  describe 'Methods' do
+    describe 'favorites' do
+      let!(:user) { create(:user) }
+      let!(:post1) { create(:post) }
+      let!(:post2) { create(:post) }
+      let!(:favorite1) { create(:favorite, user:, post: post1) }
 
-    describe '#follow' do
-      it '他のユーザーをフォローする' do
-        aggregate_failures do
-          expect do
-            user.follow(other_user)
-          end.to change(user.followees, :count).by(1)
-          expect(user.following?(other_user)).to be true
+      describe '#favorited?' do
+        context 'ユーザーがポストをお気に入り登録しているとき' do
+          it 'trueを返す' do
+            expect(user.favorited?(post1.id)).to be_truthy
+          end
+        end
+
+        context 'ユーザーがポストをお気に入り登録していないとき' do
+          it 'falseを返す' do
+            expect(user.favorited?(post2.id)).to be_falsey
+          end
+        end
+      end
+
+      describe 'UserFavoriteExtension#indexed_favorites_by_post_id' do
+        it 'インデックスが作成される' do
+          indexed_favorites = user.favorites.indexed_favorites_by_post_id
+          expect(indexed_favorites[post1.id]).to eq(favorite1)
         end
       end
     end
 
-    describe '#unfollow' do
-      before do
-        user.follow(other_user)
-      end
+    describe 'relationships' do
+      let!(:user) { create(:user) }
+      let!(:other_user) { create(:other_user) }
 
-      it '他のユーザーのフォローを解除する' do
-        aggregate_failures do
-          expect do
-            user.unfollow(other_user)
-          end.to change(user.followees, :count).by(-1)
-          expect(user.following?(other_user)).to be false
+      describe '#follow' do
+        it '他のユーザーをフォローする' do
+          aggregate_failures do
+            expect do
+              user.follow(other_user)
+            end.to change(user.followees, :count).by(1)
+            expect(user.followee?(other_user.id)).to be true
+          end
         end
       end
-    end
 
-    describe '#following' do
-      context '他のユーザーをフォローしているとき' do
+      describe '#unfollow' do
         before do
           user.follow(other_user)
         end
 
-        it 'trueが返る' do
-          expect(user.following?(other_user)).to be true
+        it '他のユーザーのフォローを解除する' do
+          aggregate_failures do
+            expect do
+              user.unfollow(other_user)
+            end.to change(user.followees, :count).by(-1)
+            expect(user.followee?(other_user.id)).to be false
+          end
         end
       end
 
-      context '他のユーザーをフォローしていないとき' do
-        it 'falseが返る' do
-          expect(user.following?(other_user)).to be false
+      describe '#followee?' do
+        context '他のユーザーをフォローしているとき' do
+          before do
+            user.follow(other_user)
+          end
+
+          it 'trueが返る' do
+            expect(user.followee?(other_user.id)).to be true
+          end
         end
-      end
-    end
-  end
 
-  describe 'Methods' do
-    let!(:user) { create(:user) }
-    let!(:post1) { create(:post) }
-    let!(:post2) { create(:post) }
-    let!(:favorite1) { create(:favorite, user:, post: post1) }
-
-    describe '#favorited?' do
-      context 'ユーザーがポストをお気に入り登録しているとき' do
-        it 'trueを返す' do
-          expect(user.favorited?(post1.id)).to be_truthy
+        context '他のユーザーをフォローしていないとき' do
+          it 'falseが返る' do
+            expect(user.followee?(other_user.id)).to be false
+          end
         end
       end
 
-      context 'ユーザーがポストをお気に入り登録していないとき' do
-        it 'falseを返す' do
-          expect(user.favorited?(post2.id)).to be_falsey
-        end
-      end
-    end
+      describe 'UserRelationshipExtension#indexed_followees_by_followee_id' do
+        let!(:relationship) { create(:relationship, follower_id: user.id, followee_id: other_user.id) }
 
-    describe 'UserFavoriteExtension#indexed_favorites_by_post_id' do
-      it 'インデックスが作成される' do
-        indexed_favorites = user.favorites.indexed_favorites_by_post_id
-        expect(indexed_favorites[post1.id]).to eq(favorite1)
+        it 'インデックスが作成される' do
+          indexed_followees = user.active_relationships.indexed_followees_by_followee_id
+          expect(indexed_followees[other_user.id]).to eq(relationship)
+        end
       end
     end
   end

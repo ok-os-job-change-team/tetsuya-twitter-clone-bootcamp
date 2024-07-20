@@ -7,6 +7,12 @@ class User < ApplicationRecord
     end
   end
 
+  module UserRelationshipExtension
+    def indexed_followees_by_followee_id
+      @indexed_followees_by_followee_id ||= index_by(&:followee_id)
+    end
+  end
+
   validates :email, presence: true
 
   has_many :posts, dependent: :destroy, inverse_of: :user
@@ -19,8 +25,10 @@ class User < ApplicationRecord
     favorites.indexed_favorites_by_post_id[post_id].present?
   end
 
-  has_many :active_relationships, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy,
-                                  inverse_of: :follower
+  has_many :active_relationships, lambda {
+                                    extending UserRelationshipExtension
+                                  }, class_name: 'Relationship', foreign_key: 'follower_id', dependent: :destroy,
+                                     inverse_of: :follower
   has_many :passive_relationships, class_name: 'Relationship', foreign_key: 'followee_id', dependent: :destroy,
                                    inverse_of: :followee
   has_many :followees, through: :active_relationships, source: :followee
@@ -34,7 +42,7 @@ class User < ApplicationRecord
     active_relationships.find_by(followee_id: user.id).destroy
   end
 
-  def following?(user)
-    followees.include?(user)
+  def followee?(followee_id)
+    active_relationships.indexed_followees_by_followee_id[followee_id].present?
   end
 end

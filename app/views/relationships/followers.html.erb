@@ -4,8 +4,8 @@
   <h1>フォロワー</h1>
   <%= render 'layouts/flash' %>
 
-  <% if @users.exists? %>
-    <%= render 'users/list', users: @users %>
+  <% if @followers.exists? %>
+    <%= render 'users/list', { users: @followers } %>
   <% else %>
     <p>フォロワーはいません</p>
   <% end %>

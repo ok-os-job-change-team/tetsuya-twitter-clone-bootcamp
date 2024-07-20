@@ -7,5 +7,5 @@
 
   <%= render 'layouts/flash' %>
 
-  <%= render 'users/list', users: @users %>
+  <%= render 'users/list', { users: @users, followees: @followees_by_user} %>
 </div>
