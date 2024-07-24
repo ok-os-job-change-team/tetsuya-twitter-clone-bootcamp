@@ -51,6 +51,6 @@ class User < ApplicationRecord
   end
 
   def followee?(followee)
-    ActiveRelationship.followee?(self, followee)
+    active_relationships.indexed_followees_by_followee_id[followee.id].present?
   end
 end

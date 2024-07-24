@@ -11,9 +11,5 @@ class ActiveRelationship < Relationship
     def unfollow(user, followee)
       find_by(follower: user, followee:).destroy
     end
-
-    def followee?(user, followee)
-      user.active_relationships.indexed_followees_by_followee_id[followee.id].present?
-    end
   end
 end

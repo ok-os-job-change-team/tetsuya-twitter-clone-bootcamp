@@ -28,23 +28,5 @@ RSpec.describe ActiveRelationship, type: :model do
         end.to change(ActiveRelationship, :count).by(-1)
       end
     end
-
-    describe '.followee?' do
-      context 'フォロー中のとき' do
-        before do
-          ActiveRelationship.create(follower: user, followee: other_user)
-        end
-
-        it 'trueが返る' do
-          expect(ActiveRelationship.followee?(user, other_user)).to be_truthy
-        end
-      end
-
-      context 'フォロー中でないとき' do
-        it 'falseが返る' do
-          expect(ActiveRelationship.followee?(user, other_user)).to be_falsey
-        end
-      end
-    end
   end
 end
