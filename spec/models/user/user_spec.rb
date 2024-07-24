@@ -68,13 +68,6 @@ RSpec.describe User, type: :model do
           end
         end
       end
-
-      describe 'UserFavoriteExtension#indexed_favorites_by_post_id' do
-        it 'インデックスが作成される' do
-          indexed_favorites = user.favorites.indexed_favorites_by_post_id
-          expect(indexed_favorites[post1.id]).to eq(favorite1)
-        end
-      end
     end
 
     describe 'relationships' do
@@ -87,7 +80,7 @@ RSpec.describe User, type: :model do
             expect do
               user.follow(other_user)
             end.to change(user.followees, :count).by(1)
-            expect(user.followee?(other_user.id)).to be true
+            expect(user.followee?(other_user)).to be_truthy
           end
         end
       end
@@ -102,7 +95,7 @@ RSpec.describe User, type: :model do
             expect do
               user.unfollow(other_user)
             end.to change(user.followees, :count).by(-1)
-            expect(user.followee?(other_user.id)).to be false
+            expect(user.followee?(other_user)).to be_falsey
           end
         end
       end
@@ -114,23 +107,14 @@ RSpec.describe User, type: :model do
           end
 
           it 'trueが返る' do
-            expect(user.followee?(other_user.id)).to be true
+            expect(user.followee?(other_user)).to be_truthy
           end
         end
 
         context '他のユーザーをフォローしていないとき' do
           it 'falseが返る' do
-            expect(user.followee?(other_user.id)).to be false
+            expect(user.followee?(other_user)).to be_falsey
           end
-        end
-      end
-
-      describe 'UserRelationshipExtension#indexed_followees_by_followee_id' do
-        let!(:relationship) { create(:relationship, follower_id: user.id, followee_id: other_user.id) }
-
-        it 'インデックスが作成される' do
-          indexed_followees = user.active_relationships.indexed_followees_by_followee_id
-          expect(indexed_followees[other_user.id]).to eq(relationship)
         end
       end
     end

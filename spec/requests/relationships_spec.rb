@@ -20,7 +20,7 @@ RSpec.describe RelationshipsController, type: :request do
             expect do
               post user_relationships_path(other_user)
             end.to change(Relationship, :count).by(1)
-            expect(user.followee?(other_user.id)).to be true
+            expect(user.followee?(other_user)).to be_truthy
             expect(flash[:success]).to eq 'フォローしました'
             expect(response).to redirect_to(posts_url)
           end
@@ -37,7 +37,7 @@ RSpec.describe RelationshipsController, type: :request do
             expect do
               post user_relationships_path(other_user.id)
             end.not_to change(Relationship, :count)
-            expect(user.followee?(other_user.id)).to be false
+            expect(user.followee?(other_user)).to be_falsey
             expect(flash[:alert]).to eq 'フォローに失敗しました'
             expect(response).to redirect_to(posts_url)
           end
@@ -51,7 +51,7 @@ RSpec.describe RelationshipsController, type: :request do
           expect do
             post user_relationships_path(other_user.id)
           end.not_to change(Relationship, :count)
-          expect(user.followee?(other_user.id)).to be false
+          expect(user.followee?(other_user)).to be_falsey
           expect(flash[:alert]).to eq 'ログインしてください'
           expect(response).to redirect_to(login_url)
         end
@@ -71,7 +71,7 @@ RSpec.describe RelationshipsController, type: :request do
             expect do
               delete user_relationship_path(other_user, relationship)
             end.to change(Relationship, :count).by(-1)
-            expect(user.followee?(other_user.id)).to be false
+            expect(user.followee?(other_user)).to be_falsey
             expect(flash[:success]).to eq 'フォローを解除しました'
             expect(response).to redirect_to(posts_url)
           end
@@ -88,7 +88,7 @@ RSpec.describe RelationshipsController, type: :request do
             expect do
               delete user_relationship_path(other_user, relationship)
             end.not_to change(Relationship, :count)
-            expect(user.followee?(other_user.id)).to be true
+            expect(user.followee?(other_user)).to be_truthy
             expect(flash[:alert]).to eq 'フォロー解除に失敗しました'
             expect(response).to redirect_to(posts_url)
           end
@@ -102,7 +102,7 @@ RSpec.describe RelationshipsController, type: :request do
           expect do
             delete user_relationship_path(other_user, relationship)
           end.not_to change(Relationship, :count)
-          expect(user.followee?(other_user.id)).to be true
+          expect(user.followee?(other_user)).to be_truthy
           expect(flash[:alert]).to eq 'ログインしてください'
           expect(response).to redirect_to(login_url)
         end

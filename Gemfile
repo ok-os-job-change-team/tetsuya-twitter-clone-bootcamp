@@ -96,9 +96,6 @@ group :development do
 
   # [https://github.com/zdennis/activerecord-import]
   gem 'activerecord-import'
-
-  # N+1を検知する[https://github.com/flyerhzm/bullet]
-  gem 'bullet'
 end
 
 group :test do
