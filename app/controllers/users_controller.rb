@@ -7,6 +7,9 @@ class UsersController < ApplicationController
   # GET /users
   def index
     @users = User.all
+    @followees_counts = Relationship.where(follower_id: @users.pluck(:id)).group(:follower_id).count
+    @followers_counts = Relationship.where(followee_id: @users.pluck(:id)).group(:followee_id).count
+    @followees_by_user = current_user.active_relationships.index_by(&:followee_id)
   end
 
   # GET /users/:id

@@ -9,11 +9,12 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-USERS_COUNT = 2
+USERS_COUNT = 5
 POST_BATCH_SIZE = 1_000
 TOTAL_POST_COUNT = 10_000
 
-Faker::Config.random = Random.new(1)
+FAKER_RANDOM_NUM = 42
+Faker::Config.random = Random.new(FAKER_RANDOM_NUM)
 
 users = []
 USERS_COUNT.times do |i|

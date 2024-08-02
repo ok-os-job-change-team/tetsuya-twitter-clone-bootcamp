@@ -57,6 +57,15 @@
             </div>
           </div>
         </div>
+      <% else %>
+        <div class="field is-horizontal">
+          <div class="field-label"></div>
+          <div class="field-body">
+            <div class="control">
+              <%= render 'relationships/btn', user: @user %>
+            </div>
+          </div>
+        </div>
       <% end %>
 
       <div class="field is-horizontal">
@@ -64,6 +73,20 @@
         <div class="field-body">
           <div class="control">
             <%= link_to 'ユーザー一覧', users_path, class: 'button is-primary is-rounded is-outlined is-fullwidth' %>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-horizontal">
+        <div class="field-label"></div>
+        <div class="field-body">
+          <div class="control">
+            <table>
+              <tr>
+                <td><%= link_to "#{@user.followees.count}フォロー", user_followees_path(@user) %></td>
+                <td><%= link_to "#{@user.followers.count}フォロワー", user_followers_path(@user) %></td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>

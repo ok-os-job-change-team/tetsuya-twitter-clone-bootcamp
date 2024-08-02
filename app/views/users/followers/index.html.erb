@@ -1,0 +1,12 @@
+<% provide(:title, 'フォロワー一覧') %>
+
+<div class="contents-wrapper">
+  <h1>フォロワー</h1>
+  <%= render 'layouts/flash' %>
+
+  <% if @followers.exists? %>
+    <%= render 'users/list', { users: @followers } %>
+  <% else %>
+    <p>フォロワーはいません</p>
+  <% end %>
+</div>

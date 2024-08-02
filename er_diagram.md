@@ -31,3 +31,35 @@ FAVORITES {
   datetime updated_at
 }
 ```
+### ユーザーフォロー機能
+```mermaid
+erDiagram
+
+%% ユーザーフォロー機能
+"USERS (FOLLOWERS)" ||--o{ RELATIONSHIPS : "has many / belongs to"
+"USERS (FOLLOWEES)" ||--o{ RELATIONSHIPS : "has many / belongs to"
+
+"USERS (FOLLOWERS)" {
+  bigint id PK
+  string email
+  string password_digest
+  datetime created_at
+  datetime updated_at
+}
+
+"USERS (FOLLOWEES)" {
+  bigint id PK
+  string email
+  string password_digest
+  datetime created_at
+  datetime updated_at
+}
+
+RELATIONSHIPS {
+  bigint id PK
+  bigint follower_id FK
+  bigint followee_id FK
+  datetime created_at
+  datetime updated_at
+}
+```
