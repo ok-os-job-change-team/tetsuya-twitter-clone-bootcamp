@@ -18,8 +18,8 @@ Rails.application.routes.draw do
 
   resources :users, only: %i[index show new create edit update destroy] do
     resources :relationships, only: %i[create destroy]
-    get 'followees', to: 'relationships#followees', as: 'followees'
-    get 'followers', to: 'relationships#followers', as: 'followers'
+    resources :followees, only: %i[index], module: :users
+    resources :followers, only: %i[index], module: :users
   end
 
   resources :posts, only: %i[index show new create edit update destroy] do
