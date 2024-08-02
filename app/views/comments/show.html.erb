@@ -1,0 +1,53 @@
+<% provide(:title, 'コメント詳細' + @post.title) %>
+
+<style>
+  .field.has-addons {
+    width: 100%;
+  }
+
+  div.control {
+    width: 50%;
+  }
+
+  div.descendant-comments {
+    margin-left: 10%;
+  }
+</style>
+
+<div class="contents-wrapper">
+  <h1>ポスト</h1>
+  <%= render 'layouts/flash' %>
+
+  <article class="media">
+    <div class="media-content">
+      <p>
+        <strong><%= link_to @post.user.email, user_path(@post.user) %></strong>
+      </p>
+      <p><%= link_to @post.title, post_path(@post) %></p>
+      <p><%= simple_format(@post.content) %></p>
+      <p>
+        <small>投稿日時：<%= @post.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></small>
+        <br>
+        <small>更新日時：<%= @post.updated_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %></small>
+      </p>
+    </div>
+  </article>
+
+  <div>
+    <%= link_to 'ポスト一覧', posts_path, class: 'button is-primary is-outlined is-rounded is-fullwidth' %>
+  </div>
+
+  <h3>ここまでのコメント</h3>
+  <div class="ancestor-comments">
+    <%= render 'comments/comment', { comments: @ancestors } %>
+  </div>
+
+  <div class="reply-form">
+    <%= render 'comments/form' %>
+  </div>
+
+  <h3>みんなのコメント</h3>
+  <div class="descendant-comments">
+    <%= render 'comments/comment', { comments: @descendants } %>
+  </div>
+</div>
