@@ -66,6 +66,7 @@ RSpec.describe Post, type: :model do
   describe 'Associations' do
     it { should belong_to(:user) }
     it { should have_many(:favorites).dependent(:destroy) }
+    it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe '.search_by_content_or_title' do

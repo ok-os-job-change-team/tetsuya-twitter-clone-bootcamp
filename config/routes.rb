@@ -24,6 +24,7 @@ Rails.application.routes.draw do
 
   resources :posts, only: %i[index show new create edit update destroy] do
     resources :favorites, only: %i[create destroy]
+    resources :comments,  only: %i[show create]
   end
 
   get '*not_found', to: 'application#routing_error'

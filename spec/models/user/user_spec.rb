@@ -46,6 +46,7 @@ RSpec.describe User, type: :model do
     it { should have_many(:passive_relationships).dependent(:destroy) }
     it { should have_many(:followees).through(:active_relationships).source(:followee) }
     it { should have_many(:followers).through(:passive_relationships).source(:follower) }
+    it { should have_many(:comments).dependent(:destroy) }
   end
 
   describe 'Methods' do
