@@ -1,0 +1,45 @@
+<div class="comments">
+  <% if comments.empty? %>
+    <p>コメントはまだありません</p>
+  <% else %>
+    <% comments.each do |comment| %>
+      <article class="media">
+        <div class="media-content">
+          <div class="comment-wrapper">
+            <p><%= link_to comment.user.email, user_path(comment.user) %></p>
+            <p>
+              <%= simple_format(comment.comment) %>
+            </p>
+
+            <p>
+              <span>
+                <%= link_to post_comment_path(@post, comment) do %>
+                  <span class="material-icons", style="color: #4A9A98;">
+                    mode_comment
+                  </span>
+                <% end %>
+                <%= @descendant_counts[comment.id] - 1 %>
+              </span>
+              <span>
+                <span class="material-icons">
+                  upload
+                </span>
+                <small>
+                  <%= comment.created_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %>
+                </small>
+              <span>
+              <span>
+                <span class="material-icons">
+                  update
+                </span>
+                <small>
+                  <%= comment.updated_at.in_time_zone('Tokyo').strftime("%Y-%m-%d %H:%M:%S") %>
+                </small>
+              </span>
+            </p>
+          </div>
+        </div>
+      </article>
+    <% end %>
+  <% end %>
+</div>

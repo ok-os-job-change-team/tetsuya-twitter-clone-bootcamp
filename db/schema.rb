@@ -11,6 +11,18 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.1].define(version: 0) do
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "コメント", force: :cascade do |t|
+    t.bigint "post_id", null: false, comment: "親ポストID"
+    t.bigint "parent_id", comment: "親コメントID"
+    t.bigint "user_id", null: false, comment: "投稿者ID"
+    t.string "comment", null: false, comment: "コメント"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["parent_id"], name: "index_comments_on_parent_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
   create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "いいね", force: :cascade do |t|
     t.bigint "post_id", null: false, comment: "ポストID"
     t.bigint "user_id", null: false, comment: "投稿者ID"
@@ -40,6 +52,14 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
+  create_table "tree_paths", id: false, charset: "utf8mb4", collation: "utf8mb4_bin", comment: "先祖・子孫関係", force: :cascade do |t|
+    t.bigint "ancestor_id", null: false, comment: "先祖commentID"
+    t.bigint "descendant_id", null: false, comment: "子孫commentID"
+    t.integer "path_length", null: false
+    t.index ["ancestor_id"], name: "index_tree_paths_on_ancestor_id"
+    t.index ["descendant_id"], name: "index_tree_paths_on_descendant_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "ユーザー", force: :cascade do |t|
     t.string "email", null: false, comment: "メールアドレス"
     t.string "password_digest", null: false, comment: "パスワード"
@@ -47,9 +67,14 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "comments", "comments", column: "parent_id"
+  add_foreign_key "comments", "posts"
+  add_foreign_key "comments", "users"
   add_foreign_key "favorites", "posts"
   add_foreign_key "favorites", "users"
   add_foreign_key "posts", "users"
   add_foreign_key "relationships", "users", column: "followee_id"
   add_foreign_key "relationships", "users", column: "follower_id"
+  add_foreign_key "tree_paths", "comments", column: "ancestor_id"
+  add_foreign_key "tree_paths", "comments", column: "descendant_id"
 end

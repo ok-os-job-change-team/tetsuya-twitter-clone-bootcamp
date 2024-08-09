@@ -17,18 +17,9 @@ class User < ApplicationRecord
     end
   end
 
-  validates :email, presence: true
-
   has_many :posts, dependent: :destroy, inverse_of: :user
   has_many :favorites, -> { extending UserFavoriteExtension }, dependent: :destroy, inverse_of: :user
   has_many :favorited_posts, through: :favorites, source: :post
-
-  has_secure_password
-
-  def favorited?(post_id)
-    favorites.indexed_favorites_by_post_id[post_id].present?
-  end
-
   has_many :active_relationships, -> { extending UserRelationshipExtension },
            class_name: 'ActiveRelationship',
            foreign_key: 'follower_id',
@@ -41,6 +32,15 @@ class User < ApplicationRecord
            inverse_of: :followee
   has_many :followees, through: :active_relationships, source: :followee
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :comments, dependent: :destroy
+
+  has_secure_password
+
+  validates :email, presence: true
+
+  def favorited?(post_id)
+    favorites.indexed_favorites_by_post_id[post_id].present?
+  end
 
   def follow(followee)
     ActiveRelationship.follow(self, followee)
