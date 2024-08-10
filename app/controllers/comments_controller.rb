@@ -15,17 +15,6 @@ class CommentsController < ApplicationController
 
   # POST /posts/:post_id/comments
   def create
-    # @post = Post.find(params[:post_id])
-    # @comment = @post.comments.build(comment_params)
-    # @comment.parent_id = params[:comment][:parent_id]
-    # if @comment.save
-    #   flash[:success] = 'コメントが作成されました'
-    #   redirect_to post_comment_url(@post, @comment)
-    # else
-    #   flash[:alert] = 'コメントの作成に失敗しました'
-    #   render partial: 'comments/form', locals: { post: @post, comment: @comment }, status: :unprocessable_entity
-    # end
-
     form = Comment::BuildForm.new(
       user_id: session[:user_id],
       post: current_post,

@@ -73,8 +73,8 @@ ActiveRecord::Schema[7.1].define(version: 0) do
   add_foreign_key "favorites", "posts"
   add_foreign_key "favorites", "users"
   add_foreign_key "posts", "users"
-  add_foreign_key "relationships", "users", column: "followee_id"
-  add_foreign_key "relationships", "users", column: "follower_id"
+  add_foreign_key "relationships", "users", column: "followee_id", name: "fk_followee_id_on_relationships"
+  add_foreign_key "relationships", "users", column: "follower_id", name: "fk_follower_id_on_relationships"
   add_foreign_key "tree_paths", "comments", column: "ancestor_id"
   add_foreign_key "tree_paths", "comments", column: "descendant_id"
 end

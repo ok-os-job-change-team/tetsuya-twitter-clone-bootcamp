@@ -24,31 +24,4 @@ class Comment < ApplicationRecord
   end
 
   validates :comment, presence: true, length: { maximum: 140 }
-
-  after_create :create_closure_entries
-
-  private
-
-  def create_closure_entries
-    ActiveRecord::Base.transaction do
-      # 自分自身へのパスを作成
-      TreePath.create!(ancestor_id: id, descendant_id: id, path_length: 0)
-
-      # 祖先コメントのパスを取得・パスを作成
-      create_paths_to_ancestors if parent_id.present?
-    end
-  end
-
-  def create_paths_to_ancestors
-    ancestor_paths = TreePath.where(descendant_id: parent_id).to_a
-    paths_to_create = ancestor_paths.map do |ancestor_path|
-      {
-        ancestor_id: ancestor_path.ancestor_id,
-        descendant_id: id,
-        path_length: ancestor_path.path_length + 1
-      }
-    end
-
-    TreePath.import(paths_to_create) if paths_to_create.any?
-  end
 end
