@@ -15,22 +15,40 @@ class CommentsController < ApplicationController
 
   # POST /posts/:post_id/comments
   def create
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.build(comment_params)
-    @comment.parent_id = params[:comment][:parent_id]
-    if @comment.save
+    # @post = Post.find(params[:post_id])
+    # @comment = @post.comments.build(comment_params)
+    # @comment.parent_id = params[:comment][:parent_id]
+    # if @comment.save
+    #   flash[:success] = 'コメントが作成されました'
+    #   redirect_to post_comment_url(@post, @comment)
+    # else
+    #   flash[:alert] = 'コメントの作成に失敗しました'
+    #   render partial: 'comments/form', locals: { post: @post, comment: @comment }, status: :unprocessable_entity
+    # end
+
+    form = Comment::BuildForm.new(
+      user_id: session[:user_id],
+      post: current_post,
+      params: create_params
+    )
+    if form.save
       flash[:success] = 'コメントが作成されました'
-      redirect_to post_comment_url(@post, @comment)
+      redirect_to post_comment_url(form.post, form.comment)
     else
-      flash[:alert] = 'コメントの作成に失敗しました'
-      render partial: 'comments/form', locals: { post: @post, comment: @comment }, status: :unprocessable_entity
+      flash[:alert] = "コメントの作成に失敗しました #{form.errors.full_messages.to_sentence}"
+      render partial: 'comments/form', locals: { post: form.post, comment: form.comment }, status: :unprocessable_entity
     end
   end
 
   private
 
-  def comment_params
-    params.require(:comment).permit(:comment, :parent_id).merge(user_id: current_user.id)
+  def current_post
+    @current_post ||= Post.find(params[:post_id])
+  end
+
+  def create_params
+    # params.require(:comment).permit(:comment, :parent_id).merge(user_id: current_user.id)
+    params.require(:comment).permit(:comment, :parent_id)
   end
 
   def fetch_descendant_counts(comments)
