@@ -25,8 +25,6 @@
         <%= form.text_area :comment, class: 'content-box textarea is-rounded', placeholder: 'コメント', size: '30x10', maxlength: '140' %>
       </div>
 
-      <%= form.hidden_field :parent_id, value: @parent_id %>
-
       <div class="field">
         <%= form.submit 'コメントする', class: 'button is-primary has-text-white is-rounded is-fullwidth' %>
       </div>

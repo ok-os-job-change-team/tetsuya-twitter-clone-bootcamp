@@ -13,7 +13,7 @@ class PostsController < ApplicationController
     @posts, @upcoming_page_count = Post.search_by_content_or_title(@query, @current_page)
     @favorite_counts = fetch_favorite_counts(@posts)
     @favorites = fetch_favorites(@posts)
-    @comment_counts = fetch_comment_counts(@posts)
+    @comment_counts = resolve_comment_counts(@posts)
     @page_range = calculate_page_range(@current_page, @upcoming_page_count)
 
     flash.now[:notice] = "#{@query}に該当する結果はありません" if @query.present? && @posts.empty?
@@ -25,10 +25,11 @@ class PostsController < ApplicationController
     @user = @post.user
     @favorite_count = @post.favorites.count
     @favorite = current_user.favorites.find_by(post_id: @post.id)
-    @comment = Comment.new
-    @comments = @post.comments.where(parent_id: nil).preload(:user)
-    @parent_id = nil
-    fetch_descendant_counts(@comments)
+    @comment = @post.comments.new
+    @comment.build_directly_below_post_mark
+    @comments = @post.comments.joins("INNER JOIN directly_below_post_marks ON directly_below_post_marks.comment_id = comments.id").preload(:user)
+    # @is_reply = false
+    resolve_descendant_counts(@comments)
   end
 
   # GET /posts/new
@@ -85,11 +86,11 @@ class PostsController < ApplicationController
     current_user.favorites.where(post_id: posts.pluck(:id)).index_by(&:post_id)
   end
 
-  def fetch_comment_counts(posts)
+  def resolve_comment_counts(posts)
     Comment.where(post_id: posts.pluck(:id)).group(:post_id).count
   end
 
-  def fetch_descendant_counts(comments)
+  def resolve_descendant_counts(comments)
     descendant_counts = TreePath.where(ancestor_id: comments.pluck(:id)).group(:ancestor_id).count(:descendant_id)
     @descendant_counts = {}
     descendant_counts.each do |ancestor_id, count|

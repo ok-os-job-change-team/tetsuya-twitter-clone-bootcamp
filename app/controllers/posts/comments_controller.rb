@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     @post = Post.find(params[:post_id])
     @comment = Comment.find(params[:id])
     @ancestors = @comment.ancestors.order(id: :asc).preload(:user)
-    @descendants = @comment.descendants.without_self.where(parent_id: @comment.id).preload(:user)
+    @descendants = @comment.descendants.without_self.where(ancestor_id: @comment.id).preload(:user)
     @parent_id = @comment.id
     fetch_descendant_counts(@ancestors + @descendants)
   end
@@ -37,7 +37,7 @@ class CommentsController < ApplicationController
 
   def create_params
     # params.require(:comment).permit(:comment, :parent_id).merge(user_id: current_user.id)
-    params.require(:comment).permit(:comment, :parent_id)
+    params.require(:comment).permit(:comment, :is_reply)
   end
 
   def fetch_descendant_counts(comments)

@@ -4,9 +4,9 @@
 # vi: set ft=ruby :
 create_table :tree_paths, id: false, primary_key: %i[ancestor_id descendant_id], charset: 'utf8mb4',
                           collation: 'utf8mb4_bin', comment: '先祖・子孫関係', force: :cascade do |t|
-  t.references :ancestor,    null: false, foreign_key: { to_table: :comments, column: :ancestor_id },
-                             comment: '先祖commentID'
-  t.references :descendant,  null: false, foreign_key: { to_table: :comments, column: :descendant_id },
-                             comment: '子孫commentID'
+  t.references :ancestor, null: false, foreign_key: { to_table: :comments, column: :ancestor_id },
+                          comment: '先祖commentID'
+  t.references :descendant, null: false, foreign_key: { to_table: :comments, column: :descendant_id },
+                            comment: '子孫commentID'
   t.integer    :path_length, null: false
 end

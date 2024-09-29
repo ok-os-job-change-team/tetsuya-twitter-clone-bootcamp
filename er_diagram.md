@@ -10,6 +10,9 @@ Posts ||--o{ Favorites : "has many / belongs to"
 Posts ||--o{ Comments : "has many / belongs to"
 Users ||--o{ Comments : "has many / belongs to"
 
+%% 1:0or1
+Comments ||--o| DirectlyBelowPostMarks : "has one / belongs to"
+
 %% 1:1or多
 Comments ||--|{ TreePaths : "has many / belongs to"
 
@@ -59,5 +62,9 @@ TreePaths {
   bigint ancestor_id FK
   bigint descendant_id FK
   integer path_length
+}
+
+DirectlyBelowPostMarks {
+  bigint comment_id FK
 }
 ```

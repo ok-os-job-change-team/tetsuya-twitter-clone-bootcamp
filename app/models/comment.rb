@@ -3,10 +3,9 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
-  belongs_to :parent, class_name: 'Comment', optional: true
 
-  has_many :children, class_name: 'Comment', foreign_key: :parent_id, dependent: :restrict_with_error,
-                      inverse_of: :parent
+  has_one :directly_below_post_mark, dependent: :destroy
+  accepts_nested_attributes_for :directly_below_post_mark
   has_many :ancestor_paths, class_name: 'TreePath', foreign_key: 'descendant_id', dependent: :destroy,
                             inverse_of: :descendant
   has_many :descendant_paths, class_name: 'TreePath', foreign_key: 'ancestor_id', dependent: :destroy,

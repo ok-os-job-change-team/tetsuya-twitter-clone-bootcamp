@@ -1,0 +1,35 @@
+<style>
+  div.comment-form-wrapper {
+    width: 100%;
+    margin: 2rem auto;
+  }
+
+  form {
+    width: 100%;
+  }
+
+  .textarea {
+    width: 100%;
+    margin: 0;
+    resize: none;
+  }
+</style>
+
+<div class="comment-form-wrapper">
+  <div class="field is-grouped">
+    <%= form_with(model: [ @post, @post.comments.build ], local: true) do |form| %>
+      <%= render 'shared/error_messages', { object: form.object } %>
+
+      <div class="field">
+        <label class="label"><%= form.label 'コメントする' %></label>
+        <%= form.text_area :comment, class: 'content-box textarea is-rounded', placeholder: 'コメント', size: '30x10', maxlength: '140' %>
+      </div>
+
+      <%= form.hidden_field :is_reply, value: @is_reply %>
+
+      <div class="field">
+        <%= form.submit 'コメントする', class: 'button is-primary has-text-white is-rounded is-fullwidth' %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -33,7 +33,7 @@ class Comment
     def comment
       @comment ||= Comment.new(
         comment: params[:comment],
-        parent_id: params[:parent_id],
+        is_reply: params[:is_reply],
         post: post,
         user_id: user_id
       )

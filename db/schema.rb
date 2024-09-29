@@ -13,14 +13,17 @@
 ActiveRecord::Schema[7.1].define(version: 0) do
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "コメント", force: :cascade do |t|
     t.bigint "post_id", null: false, comment: "親ポストID"
-    t.bigint "parent_id", comment: "親コメントID"
     t.bigint "user_id", null: false, comment: "投稿者ID"
     t.string "comment", null: false, comment: "コメント"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["parent_id"], name: "index_comments_on_parent_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "directly_below_post_marks", id: false, charset: "utf8mb4", collation: "utf8mb4_bin", comment: "ポスト直下のコメント", force: :cascade do |t|
+    t.bigint "comment_id", null: false, comment: "コメントID"
+    t.index ["comment_id"], name: "index_directly_below_post_marks_on_comment_id"
   end
 
   create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "いいね", force: :cascade do |t|
@@ -67,9 +70,9 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "comments", "comments", column: "parent_id"
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "directly_below_post_marks", "comments"
   add_foreign_key "favorites", "posts"
   add_foreign_key "favorites", "users"
   add_foreign_key "posts", "users"
