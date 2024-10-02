@@ -8,13 +8,10 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @current_page = (params[:page] || 1).to_i
-    @query = params[:query]
-    @posts, @upcoming_page_count = Post.search_by_content_or_title(@query, @current_page)
-    @favorite_counts = fetch_favorite_counts(@posts)
-    @favorites = fetch_favorites(@posts)
-    @page_range = calculate_page_range(@current_page, @upcoming_page_count)
-
+    resolve_pagination
+    @favorite_counts = resolve_favorite_counts(@posts)
+    @favorites = resolve_favorites(@posts)
+    @comment_counts = resolve_comment_counts(@posts)
     flash.now[:notice] = "#{@query}に該当する結果はありません" if @query.present? && @posts.empty?
   end
 
@@ -24,6 +21,8 @@ class PostsController < ApplicationController
     @user = @post.user
     @favorite_count = @post.favorites.count
     @favorite = current_user.favorites.find_by(post_id: @post.id)
+    @comment = Comment.new
+    @comments = @post.comments.preload(:user)
   end
 
   # GET /posts/new
@@ -72,12 +71,9 @@ class PostsController < ApplicationController
 
   private
 
-  def fetch_favorite_counts(posts)
-    Favorite.where(post_id: posts.pluck(:id)).group(:post_id).count
-  end
-
-  def fetch_favorites(posts)
-    current_user.favorites.where(post_id: posts.pluck(:id)).index_by(&:post_id)
+  def authorize_post_edit
+    post = Post.find_by(id: params[:id])
+    check_edit_authority(user_id: post.user_id, redirect_url: post_url(post))
   end
 
   def calculate_page_range(current_page, upcoming_page_count)
@@ -96,8 +92,22 @@ class PostsController < ApplicationController
     params.require(:post).permit(:title, :content).merge(user_id: current_user.id)
   end
 
-  def authorize_post_edit
-    post = Post.find_by(id: params[:id])
-    check_edit_authority(user_id: post.user_id, redirect_url: post_url(post))
+  def resolve_comment_counts(posts)
+    Comment.where(post_id: posts.pluck(:id)).group(:post_id).count
+  end
+
+  def resolve_favorites(posts)
+    current_user.favorites.where(post_id: posts.pluck(:id)).index_by(&:post_id)
+  end
+
+  def resolve_favorite_counts(posts)
+    Favorite.where(post_id: posts.pluck(:id)).group(:post_id).count
+  end
+
+  def resolve_pagination
+    @current_page = (params[:page] || 1).to_i
+    @query = params[:query]
+    @posts, @upcoming_page_count = Post.search_by_content_or_title(@query, @current_page)
+    @page_range = calculate_page_range(@current_page, @upcoming_page_count)
   end
 end
