@@ -4,15 +4,16 @@ class Post < ApplicationRecord
   POSTS_PER_PAGE = 20
   MAX_NUM_PAGES_DISPLAYED = 5
 
-  before_validation :set_default_values
+  belongs_to :user
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_by_users, through: :favorites, source: :user
+  has_many :comments, dependent: :destroy
 
   validates :user_id, presence: true
   validates :title,   presence: true, length: { maximum: 30 }
   validates :content, presence: true, length: { maximum: 140 }
 
-  belongs_to :user
-  has_many :favorites, dependent: :destroy
-  has_many :favorited_by_users, through: :favorites, source: :user
+  before_validation :set_default_values
 
   class << self
     def search_by_content_or_title(query, current_page)

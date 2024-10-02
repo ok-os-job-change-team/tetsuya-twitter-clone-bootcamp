@@ -2,11 +2,21 @@
 erDiagram
 
 %% 1:0or多
-USERS ||--o{ POSTS : "has many / belongs to"
-USERS ||--o{ FAVORITES : "has many / belongs to"
-POSTS ||--o{ FAVORITES : "has many / belongs to"
+Users ||--o{ Relationships : "has many / belongs to"
+Relationships }o--|| Users : "has many / belongs to"
+Users ||--o{ Posts : "has many / belongs to"
+Users ||--o{ Favorites : "has many / belongs to"
+Posts ||--o{ Favorites : "has many / belongs to"
+Posts ||--o{ Comments : "has many / belongs to"
+Users ||--o{ Comments : "has many / belongs to"
 
- USERS {
+%% 1:0or1
+Comments ||--o| DirectlyBelowPostMarks : "has one / belongs to"
+
+%% 1:1or多
+Comments ||--|{ TreePaths : "has many / belongs to"
+
+Users {
   bigint id PK
   string email
   string password_digest
@@ -14,7 +24,7 @@ POSTS ||--o{ FAVORITES : "has many / belongs to"
   datetime updated_at
 }
 
-POSTS {
+Posts {
   bigint id PK
   bigint user_id FK
   string title
@@ -23,43 +33,38 @@ POSTS {
   datetime updated_at
 }
 
-FAVORITES {
+Favorites {
   bigint id PK
   bigint post_id FK
   bigint user_id FK
   datetime created_at
   datetime updated_at
 }
-```
-### ユーザーフォロー機能
-```mermaid
-erDiagram
 
-%% ユーザーフォロー機能
-"USERS (FOLLOWERS)" ||--o{ RELATIONSHIPS : "has many / belongs to"
-"USERS (FOLLOWEES)" ||--o{ RELATIONSHIPS : "has many / belongs to"
-
-"USERS (FOLLOWERS)" {
-  bigint id PK
-  string email
-  string password_digest
-  datetime created_at
-  datetime updated_at
-}
-
-"USERS (FOLLOWEES)" {
-  bigint id PK
-  string email
-  string password_digest
-  datetime created_at
-  datetime updated_at
-}
-
-RELATIONSHIPS {
+Relationships {
   bigint id PK
   bigint follower_id FK
   bigint followee_id FK
   datetime created_at
   datetime updated_at
+}
+
+Comments {
+  bigint id PK
+  bigint post_id FK
+  bigint user_id FK
+  string comment
+  datetime created_at
+  datetime updated_at
+}
+
+TreePaths {
+  bigint ancestor_id FK
+  bigint descendant_id FK
+  integer path_length
+}
+
+DirectlyBelowPostMarks {
+  bigint comment_id FK
 }
 ```
