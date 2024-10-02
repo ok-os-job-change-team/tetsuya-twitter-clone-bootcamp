@@ -2,5 +2,6 @@
 
 require 'user.schema'
 require 'post.schema'
+require 'comment.schema'
 require 'favorite.schema'
 require 'relationship.schema'

@@ -41,6 +41,7 @@ RSpec.describe User, type: :model do
 
   describe 'Associations' do
     it { should have_many(:posts).dependent(:destroy) }
+    it { should have_many(:comments).dependent(:destroy) }
     it { should have_many(:favorites).dependent(:destroy) }
     it { should have_many(:active_relationships).dependent(:destroy) }
     it { should have_many(:passive_relationships).dependent(:destroy) }
