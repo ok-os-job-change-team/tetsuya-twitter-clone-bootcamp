@@ -8,7 +8,7 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    resolve_pagination
+    resolve_pagination!
     @favorite_counts = resolve_favorite_counts(@posts)
     @favorites = resolve_favorites(@posts)
     @comment_counts = resolve_comment_counts(@posts)
@@ -104,7 +104,7 @@ class PostsController < ApplicationController
     Favorite.where(post_id: posts.pluck(:id)).group(:post_id).count
   end
 
-  def resolve_pagination
+  def resolve_pagination!
     @current_page = (params[:page] || 1).to_i
     @query = params[:query]
     @posts, @upcoming_page_count = Post.search_by_content_or_title(@query, @current_page)

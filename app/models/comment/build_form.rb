@@ -18,20 +18,19 @@ class Comment
     end
 
     def save
-      return false unless valid?
+      comment
+      return false unless comment.valid?
 
       ActiveRecord::Base.transaction do
-        save_record!(comment)
-      rescue ActiveRecord::Rollback
-        return false
+        raise ActiveRecord::Rollback unless save_record!(comment)
       end
 
-      errors.empty?
+      true
     end
 
     # @return [Comment]
     def comment
-      Comment.new(
+      @comment || Comment.new(
         comment: params[:comment],
         post:,
         user_id:
@@ -43,7 +42,7 @@ class Comment
     private
 
     def save_record!(record)
-      return true if record.nil? || record.save
+      return true if record.save
 
       record.errors.full_messages.each do |message|
         errors.add(:base, message)
@@ -54,7 +53,9 @@ class Comment
     def comment_valid?
       return if comment.valid?
 
-      comment.errors.each { errors.add(:base, _1.full_message) }
+      comment.errors.each do |error|
+        errors.add(:base, error.full_message)
+      end
     end
   end
 end
