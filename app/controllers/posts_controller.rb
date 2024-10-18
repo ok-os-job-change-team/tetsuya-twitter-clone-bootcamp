@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
-  MAX_NUM_PAGES_DISPLAYED = Post::MAX_NUM_PAGES_DISPLAYED
-
   before_action :check_logged_in, only: %i[index show new create]
   before_action :authorize_post_edit, only: %i[edit update destroy]
 
@@ -76,18 +74,6 @@ class PostsController < ApplicationController
     check_edit_authority(user_id: post.user_id, redirect_url: post_url(post))
   end
 
-  def calculate_page_range(current_page, upcoming_page_count)
-    displayed_last_page_num = current_page + upcoming_page_count - 1
-    displayed_start_page_num = if displayed_last_page_num <= MAX_NUM_PAGES_DISPLAYED
-                                 1
-                               elsif upcoming_page_count < (MAX_NUM_PAGES_DISPLAYED + 1) / 2
-                                 displayed_last_page_num - MAX_NUM_PAGES_DISPLAYED + 1
-                               else
-                                 current_page - (MAX_NUM_PAGES_DISPLAYED - 1) / 2
-                               end
-    (displayed_start_page_num..displayed_last_page_num).to_a
-  end
-
   def post_params
     params.require(:post).permit(:title, :content).merge(user_id: current_user.id)
   end
@@ -105,9 +91,13 @@ class PostsController < ApplicationController
   end
 
   def resolve_pagination!
-    @current_page = (params[:page] || 1).to_i
     @query = params[:query]
-    @posts, @upcoming_page_count = Post.search_by_content_or_title(@query, @current_page)
-    @page_range = calculate_page_range(@current_page, @upcoming_page_count)
+    @last_post_id = params[:last_post_id]
+    @first_post_id = params[:first_post_id]
+    @posts, @next_cursor, @prev_cursor = Post.resolve_posts_with_pagination(
+      query: @query,
+      last_post_id: @last_post_id,
+      first_post_id: @first_post_id
+    )
   end
 end
