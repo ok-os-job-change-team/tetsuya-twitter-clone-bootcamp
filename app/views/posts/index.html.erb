@@ -34,25 +34,15 @@
     </div>
   <% end %>
 
-  <% if @upcoming_page_count > 1 || @current_page > 1 %>
-    <nav class="pagination" role="navigation" aria-label="pagination">
-      <ul class="pagination-list">
-        <% if @current_page > 1 %>
-          <li>
-            <%= link_to '<', posts_path(page: @current_page - 1, query: @query), class: 'pagination-previous' %>
-          </li>
-        <% end %>
-        <% @page_range.each do |page| %>
-          <li style="margin: 0;">
-            <%= link_to page, posts_path(page: page, query: @query), class: 'pagination-link' %>
-          </li>
-        <% end %>
-        <% if @upcoming_page_count > 1 %>
-          <li style="margin: 0;">
-            <%= link_to '>', posts_path(page: @current_page + 1, query: @query), class: 'pagination-next' %>
-          </li>
-        <% end %>
-      </ul>
-    </nav>
-  <% end %>
+  <nav class="pagination" role="navigation" aria-label="pagination">
+    <ul class="pagination-list">
+      <li style="margin: 0;">
+        <%= link_to '< prev', posts_path(first_post_id: @prev_cursor, query: params[:query]), class: 'pagination-previous' %>
+      </li>
+
+      <li style="margin: 0;">
+        <%= link_to 'next >', posts_path(last_post_id: @next_cursor, query: params[:query]), class: 'pagination-next' %>
+      </li>
+    </ul>
+  </nav>
 </div>
