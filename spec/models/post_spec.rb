@@ -69,49 +69,48 @@ RSpec.describe Post, type: :model do
     it { should have_many(:comments).dependent(:destroy) }
   end
 
-  describe '.search_by_content_or_title' do
-    before do
-      create_list(:post, Post::POSTS_PER_PAGE * 2, user:)
-    end
+  describe 'resolve_posts_with_pagination' do
+    context '40件のポストについて' do
+      let!(:users_posts) { create_list(:post, Post::POSTS_PER_PAGE * 2, user:) }
 
-    context 'queryが空のとき' do
-      it '1ページ目が返される' do
-        posts, total_pages = Post.search_by_content_or_title('', 1)
-        aggregate_failures do
-          expect(posts.size).to eq(Post::POSTS_PER_PAGE)
-          expect(total_pages).to be > 0
-        end
-      end
-
-      it '2ページ目が返される' do
-        posts, total_pages = Post.search_by_content_or_title('', 2)
-        aggregate_failures do
-          expect(posts.size).to eq(Post::POSTS_PER_PAGE)
-          expect(total_pages).to be > 0
-        end
-      end
-    end
-
-    context 'queryが存在するとき' do
-      let!(:user_post) { create(:post, user:) }
-
-      context '該当ポストが存在するとき' do
-        it '該当ポストが返される' do
-          posts, total_pages = Post.search_by_content_or_title(user_post.content, 1)
+      context 'queryが空のとき' do
+        it '1ページ目が返される' do
+          posts, next_cursor, prev_cursor = Post.resolve_posts_with_pagination
           aggregate_failures do
-            expect(posts.size).to eq(1)
-            expect(posts.first.title).to eq(user_post.title)
-            expect(total_pages).to eq(1)
+            expect(posts.size).to eq(Post::POSTS_PER_PAGE)
+            expect(prev_cursor).to eq(users_posts[-1].id)
+            expect(next_cursor).to eq(users_posts[- Post::POSTS_PER_PAGE].id)
+          end
+        end
+
+        it '2ページ目が返される' do
+          posts, next_cursor, prev_cursor = \
+            Post.resolve_posts_with_pagination(last_post_id: users_posts[- Post::POSTS_PER_PAGE].id)
+          aggregate_failures do
+            expect(posts.size).to eq(Post::POSTS_PER_PAGE)
+            expect(prev_cursor).to eq(users_posts[-1 - Post::POSTS_PER_PAGE].id)
+            expect(next_cursor).to eq(users_posts[- Post::POSTS_PER_PAGE * 2].id)
           end
         end
       end
 
-      context '該当ポストが存在しないとき' do
-        it '返るポストが0となる' do
-          posts, total_pages = Post.search_by_content_or_title('hogehogefugafuga', 1)
-          aggregate_failures do
-            expect(posts.size).to eq(0)
-            expect(total_pages).to eq(0)
+      context 'queryが存在するとき' do
+        context '該当ポストが存在するとき' do
+          it '該当ポストが返される' do
+            posts, _next_cursor, _prev_cursor = Post.resolve_posts_with_pagination(query: users_posts.first.content)
+            aggregate_failures do
+              expect(posts.size).to eq(1)
+              expect(posts.first.id).to eq(users_posts.first.id)
+            end
+          end
+        end
+
+        context '該当ポストが存在しないとき' do
+          it '返るポストが0となる' do
+            posts, _next_cursor, _prev_cursor = Post.resolve_posts_with_pagination(query: 'hogehogefugafuga')
+            aggregate_failures do
+              expect(posts.empty?).to be_truthy
+            end
           end
         end
       end

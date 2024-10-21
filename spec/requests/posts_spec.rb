@@ -61,41 +61,41 @@ RSpec.describe PostsController, type: :request do
       end
     end
 
-    context '30件のポストについて' do
+    context '60件のポストについて' do
       let!(:posts) { create_list(:post, 60, user:) } # 60件の投稿を作成
 
       context 'ログイン状態でポスト一覧にアクセスするとき' do
         include_context 'userでログインする'
 
         context '1ページ目にアクセスするとき' do
-          it '1~20番目のポストが表示される' do
+          it '60~41番目のポストが表示される' do
             aggregate_failures do
-              get posts_path, params: { page: 1 }
+              get posts_path
               expect(response).to have_http_status(:success)
-              expect(response.body).to include posts[0].content
-              expect(response.body).to include posts[19].content
+              expect(response.body).to include posts[-1].content
+              expect(response.body).to include posts[- Post::POSTS_PER_PAGE].content
             end
           end
         end
 
         context '2ページ目にアクセスするとき' do
-          it '21~40番目のポストが表示される' do
+          it '40~21番目のポストが表示される' do
             aggregate_failures do
-              get posts_path, params: { page: 2 }
+              get posts_path, params: { last_post_id: posts[- Post::POSTS_PER_PAGE].id }
               expect(response).to have_http_status(:success)
-              expect(response.body).to include posts[20].content
-              expect(response.body).to include posts[39].content
+              expect(response.body).to include posts[-1 - Post::POSTS_PER_PAGE].content
+              expect(response.body).to include posts[- Post::POSTS_PER_PAGE * 2].content
             end
           end
         end
 
         context '3ページ目にアクセスするとき' do
-          it '41~60番目のポストが表示される' do
+          it '20~1番目のポストが表示される' do
             aggregate_failures do
-              get posts_path, params: { page: 3 }
+              get posts_path, params: { last_post_id: posts[- Post::POSTS_PER_PAGE * 2].id }
               expect(response).to have_http_status(:success)
-              expect(response.body).to include posts[40].content
-              expect(response.body).to include posts[59].content
+              expect(response.body).to include posts[-1 - Post::POSTS_PER_PAGE * 2].content
+              expect(response.body).to include posts[- Post::POSTS_PER_PAGE * 3].content
             end
           end
         end
