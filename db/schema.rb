@@ -26,6 +26,12 @@ ActiveRecord::Schema[7.1].define(version: 0) do
     t.index ["comment_id"], name: "index_directly_below_post_marks_on_comment_id"
   end
 
+  create_table "dummy_data", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "ベンチマークテスト用ダミーデータ", force: :cascade do |t|
+    t.string "name", null: false, comment: "名前"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "favorites", charset: "utf8mb4", collation: "utf8mb4_bin", comment: "いいね", force: :cascade do |t|
     t.bigint "post_id", null: false, comment: "ポストID"
     t.bigint "user_id", null: false, comment: "投稿者ID"
