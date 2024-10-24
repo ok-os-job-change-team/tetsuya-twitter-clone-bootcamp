@@ -11,10 +11,25 @@
 #   end
 USERS_COUNT = 1_000
 POST_BATCH_SIZE = 1_000
-TOTAL_POST_COUNT = 1_000_000
+TOTAL_POST_COUNT = 10_000_000
+DUMMY_DATA_COUNT = 10_000_000
+DUMMY_DATA_BATCH_SIZE = 1_000
 
 FAKER_RANDOM_NUM = 42
 Faker::Config.random = Random.new(FAKER_RANDOM_NUM)
+
+dummy_datums = []
+DUMMY_DATA_COUNT.times do |_i|
+  name = Faker::Name.name
+
+  dummy_datums << DummyDatum.new(name:)
+  if dummy_datums.size >= DUMMY_DATA_BATCH_SIZE
+    DummyDatum.import(dummy_datums)
+    dummy_datums.clear
+  end
+end
+
+DummyDatum.import(dummy_datums) unless dummy_datums.empty?
 
 users = []
 USERS_COUNT.times do |i|
