@@ -1,0 +1,4 @@
+-- performance_schemaの記録データをリセットする
+TRUNCATE TABLE performance_schema.events_statements_summary_by_digest;
+TRUNCATE TABLE performance_schema.events_stages_history_long;
+TRUNCATE TABLE performance_schema.events_statements_history_long;
