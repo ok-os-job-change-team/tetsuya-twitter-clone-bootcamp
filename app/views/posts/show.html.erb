@@ -47,4 +47,9 @@
   <div>
     <%= link_to 'ポスト一覧', posts_path, class: 'button is-primary is-outlined is-rounded is-fullwidth' %>
   </div>
+
+  <%= render 'posts/comments/form', { post: @post } %>
+
+  <h3>みんなのコメント</h3>
+  <%= render 'posts/comments/comment', { comments: @comments } %>
 </div>
